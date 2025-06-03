@@ -5,7 +5,7 @@ Created on Tue Jun  3 14:20:43 2025
 @author: Sophie
 """
 import pandas as pd
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 #cargar BD
 df = pd.read_csv('Decision_Voto_Elecciones.csv')
@@ -45,7 +45,8 @@ class Votante :
         self.dispocision_cambiar_voto
         self.participacion_voto_anterior
 
-class Partido
+class Partido :
+    ...
 
 ### MENÚ 2
 
@@ -78,3 +79,10 @@ def actualizar_datos(archivo, ) :
 ## 2. Gráfico de Torta
 
 ## 3. Mostrar resultados df por consola
+
+#______________________________________________________________________________
+
+##LAMADOS DE DATOS PARA VERIFICAR COSAS
+centro = df[df['Afiliacion_Politica'] == 'Centro'] # --> Partido A / Indeciso
+izquierda = df[df['Afiliacion_Politica'] == 'Izquierda'] # --> Partido C / Indeciso
+derecha = df[df['Afiliacion_Politica'] == 'Derecha'] # --> Partido B / Indeciso

@@ -1,0 +1,51 @@
+ID_Votante,Edad,Genero,Circunscripcion,Nivel_Socioeconomico,Nivel_Educativo,Afiliacion_Politica,Interes_Politica,Preocupacion_Economia,Preocupacion_Seguridad,Opinion_Gobierno_Actual,Percepcion_Corrupcion,Intencion_Voto,Disposicion_Cambiar_Voto,Participacion_Voto_Anterior
+1,35,Femenino,Centro,Medio,Universitario,Centro,4,4,3,3,4,Partido A,No,Sí
+2,58,Masculino,Norte,Alto,Posgrado,Derecha,5,3,5,2,5,Partido B,No,Sí
+3,22,Otro,Sur,Bajo,Secundario,Izquierda,3,5,2,1,4,Partido C,Sí,No
+4,49,Femenino,Este,Medio,Universitario,Centro,4,3,4,3,3,Partido A,Sí,Sí
+5,65,Masculino,Oeste,Alto,Posgrado,Derecha,5,2,5,1,5,Partido B,No,Sí
+6,28,Femenino,Centro,Medio,Universitario,Izquierda,3,4,3,2,3,Partido C,Sí,No
+7,72,Masculino,Norte,Alto,Posgrado,Derecha,5,2,5,1,5,Partido B,No,Sí
+8,31,Otro,Sur,Bajo,Secundario,Centro,3,4,3,2,4,Indeciso,Sí,No
+9,40,Femenino,Este,Medio,Universitario,Izquierda,4,5,2,1,4,Partido C,No,Sí
+10,55,Masculino,Oeste,Alto,Posgrado,Derecha,5,3,5,2,5,Partido B,No,Sí
+11,25,Femenino,Centro,Bajo,Secundario,Centro,3,4,3,3,3,Partido A,Sí,No
+12,68,Masculino,Norte,Alto,Posgrado,Derecha,5,2,5,1,5,Partido B,No,Sí
+13,38,Otro,Sur,Medio,Universitario,Izquierda,4,5,2,1,4,Partido C,Sí,Sí
+14,44,Femenino,Este,Alto,Posgrado,Centro,4,3,4,3,3,Partido A,No,Sí
+15,70,Masculino,Oeste,Alto,Posgrado,Derecha,5,2,5,1,5,Partido B,No,Sí
+16,29,Femenino,Centro,Bajo,Secundario,Izquierda,3,4,3,2,3,Indeciso,Sí,No
+17,62,Masculino,Norte,Alto,Posgrado,Derecha,5,3,5,2,5,Partido B,No,Sí
+18,33,Otro,Sur,Medio,Universitario,Centro,4,4,3,3,4,Partido A,Sí,Sí
+19,47,Femenino,Este,Medio,Universitario,Izquierda,4,5,2,1,4,Partido C,No,Sí
+20,59,Masculino,Oeste,Alto,Posgrado,Derecha,5,2,5,1,5,Partido B,No,Sí
+21,20,Femenino,Centro,Bajo,Secundario,Centro,2,4,3,3,3,Indeciso,Sí,No
+22,50,Masculino,Norte,Alto,Posgrado,Derecha,5,3,5,2,5,Partido B,No,Sí
+23,36,Otro,Sur,Medio,Universitario,Izquierda,4,5,2,1,4,Partido C,Sí,Sí
+24,42,Femenino,Este,Medio,Universitario,Centro,4,3,4,3,3,Partido A,No,Sí
+25,75,Masculino,Oeste,Alto,Posgrado,Derecha,5,2,5,1,5,Partido B,No,Sí
+26,27,Femenino,Centro,Bajo,Secundario,Izquierda,3,4,3,2,3,Indeciso,Sí,No
+27,60,Masculino,Norte,Alto,Posgrado,Derecha,5,3,5,2,5,Partido B,No,Sí
+28,30,Otro,Sur,Medio,Universitario,Centro,4,4,3,3,4,Partido A,Sí,Sí
+29,45,Femenino,Este,Medio,Universitario,Izquierda,4,5,2,1,4,Partido C,No,Sí
+30,53,Masculino,Oeste,Alto,Posgrado,Derecha,5,2,5,1,5,Partido B,No,Sí
+31,23,Femenino,Centro,Bajo,Secundario,Centro,2,4,3,3,3,Indeciso,Sí,No
+32,56,Masculino,Norte,Alto,Posgrado,Derecha,5,3,5,2,5,Partido B,No,Sí
+33,39,Otro,Sur,Medio,Universitario,Izquierda,4,5,2,1,4,Partido C,Sí,Sí
+34,48,Femenino,Este,Alto,Posgrado,Centro,4,3,4,3,3,Partido A,No,Sí
+35,71,Masculino,Oeste,Alto,Posgrado,Derecha,5,2,5,1,5,Partido B,No,Sí
+36,26,Femenino,Centro,Bajo,Secundario,Izquierda,3,4,3,2,3,Indeciso,Sí,No
+37,63,Masculino,Norte,Alto,Posgrado,Derecha,5,3,5,2,5,Partido B,No,Sí
+38,32,Otro,Sur,Medio,Universitario,Centro,4,4,3,3,4,Partido A,Sí,Sí
+39,46,Femenino,Este,Medio,Universitario,Izquierda,4,5,2,1,4,Partido C,No,Sí
+40,54,Masculino,Oeste,Alto,Posgrado,Derecha,5,2,5,1,5,Partido B,No,Sí
+41,21,Femenino,Centro,Bajo,Secundario,Centro,2,4,3,3,3,Indeciso,Sí,No
+42,57,Masculino,Norte,Alto,Posgrado,Derecha,5,3,5,2,5,Partido B,No,Sí
+43,37,Otro,Sur,Medio,Universitario,Izquierda,4,5,2,1,4,Partido C,Sí,Sí
+44,43,Femenino,Este,Alto,Posgrado,Centro,4,3,4,3,3,Partido A,No,Sí
+45,73,Masculino,Oeste,Alto,Posgrado,Derecha,5,2,5,1,5,Partido B,No,Sí
+46,24,Femenino,Centro,Bajo,Secundario,Izquierda,3,4,3,2,3,Indeciso,Sí,No
+47,61,Masculino,Norte,Alto,Posgrado,Derecha,5,3,5,2,5,Partido B,No,Sí
+48,34,Otro,Sur,Medio,Universitario,Centro,4,4,3,3,4,Partido A,Sí,Sí
+49,41,Femenino,Este,Medio,Universitario,Izquierda,4,5,2,1,4,Partido C,No,Sí
+50,56,Masculino,Oeste,Alto,Posgrado,Derecha,5,2,5,1,5,Partido B,No,Sí

@@ -56,6 +56,7 @@ class Partido :
 
     #MÉTODOS
 
+#______________________________________________________________________________
 #CÓDIGO PRINCIPAL
 votantes = {} #diccionario con datos de votantes guardados en una lista; {'id_votantes': [...]}
 
@@ -67,6 +68,8 @@ for i, fila in df.iterrows(): # .itemrrows() -> itera sobre las filas de DataFra
     
     #asignamos la lista al dicc
     votantes[id_votantes] = datos_votantes
+
+#______________________________________________________________________________
 
 ### MENÚ 2
 

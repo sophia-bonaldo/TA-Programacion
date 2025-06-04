@@ -55,7 +55,11 @@ class Partido :
         self.afiliacion_politica = afiliacion_politica #preguntar si este es un atributo de Partido
 
     #MÉTODOS
-
+votantes = {}
+for i, fila in df.iterrows():
+    id_votantes = fila ['ID_VOTANTES']
+    datos_votantes = [fila['Genero'], fila['Edad'], fila ['Circunscripcion'], fila['Nivel_Socioeconomico'], fila['Nivel_Educativo'], fila['Afiliacion_Politica'], fila['Intencion_Voto'], fila['Disposicion_Cambiar_Voto']]
+    votantes[id_votantes] = datos_votantes
 
 ### MENÚ 2
 

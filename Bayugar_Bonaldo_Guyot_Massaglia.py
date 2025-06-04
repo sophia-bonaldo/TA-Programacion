@@ -51,10 +51,11 @@ class Votante :
         
         
 class Partido :
-    def __init__(self, afiliacion_politica) :
-        self.afiliacion_politica = afiliacion_politica #preguntar si este es un atributo de Partido
-
-    #MÉTODOS
+    def __init__(self, afiliacion_politica, lista_votantes) :
+        self.afiliacion_politica = afiliacion_politica
+        self.lista_votantes = lista_votantes #lista con los votantes afiliados a un partido
+    
+#MÉTODOS
 
 #______________________________________________________________________________
 #CÓDIGO PRINCIPAL

@@ -55,10 +55,17 @@ class Partido :
         self.afiliacion_politica = afiliacion_politica #preguntar si este es un atributo de Partido
 
     #MÉTODOS
-votantes = {}
-for i, fila in df.iterrows():
-    id_votantes = fila ['ID_VOTANTES']
-    datos_votantes = [fila['Genero'], fila['Edad'], fila ['Circunscripcion'], fila['Nivel_Socioeconomico'], fila['Nivel_Educativo'], fila['Afiliacion_Politica'], fila['Intencion_Voto'], fila['Disposicion_Cambiar_Voto']]
+
+#CÓDIGO PRINCIPAL
+votantes = {} #diccionario con datos de votantes guardados en una lista; {'id_votantes': [...]}
+
+for i, fila in df.iterrows(): # .itemrrows() -> itera sobre las filas de DataFrame como una tupla (índice, serie)
+    id_votantes = fila['ID_VOTANTES'] #guardamos los id en una variable
+    datos_votantes = [fila['Genero'], fila['Edad'], fila ['Circunscripcion'], fila['Nivel_Socioeconomico'], 
+                      fila['Nivel_Educativo'], fila['Afiliacion_Politica'], fila['Intencion_Voto'], 
+                      fila['Disposicion_Cambiar_Voto']] #lista con los otros datos de los votantes
+    
+    #asignamos la lista al dicc
     votantes[id_votantes] = datos_votantes
 
 ### MENÚ 2

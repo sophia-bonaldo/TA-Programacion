@@ -1,4 +1,3 @@
-
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -46,11 +45,16 @@ class Votante :
         
         
 class Partido :
-    def __init__(self, afiliacion_politica, lista_votantes) :
+    def __init__(self, afiliacion_politica) :
         self.afiliacion_politica = afiliacion_politica
-        self.lista_votantes = lista_votantes #lista con los votantes afiliados a un partido
-    
-#MÉTODOS
+        self.lista_votantes = []#lista con los votantes afiliados a un partido
+        #METODOS
+    def agregar_votantes(self,votante):
+        self.lista_votantes.append(votante)
+partido_A = Partido("Partido A")
+partido_B = Partido("Partido B")
+partido_C = Partido("Partido C")
+
 
 #______________________________________________________________________________
 #CÓDIGO PRINCIPAL
@@ -59,10 +63,9 @@ votantes = {} #diccionario con datos de votantes guardados en una lista; {'id_vo
 for i, fila in df.iterrows(): # .itemrrows() -> itera sobre las filas de DataFrame como una tupla (índice, serie)
     id_votantes = fila['ID_Votante'] #guardamos los id en una variable
     datos_votantes = [fila['Genero'], fila['Edad'], fila ['Circunscripcion'], fila['Nivel_Socioeconomico'], 
-                      fila['Nivel_Educativo'], fila['Afiliacion_Politica'], fila['Interes_Politica'], fila['Intencion_Voto'], 
-                      fila['Disposicion_Cambiar_Voto'], fila['Participacion_Voto_Anterior'], fila['Preocupacion_Economica'], 
-                      fila['Preocupacion_Seguridad'], fila['Opinion_Gobierno_Actual'], fila['Percepcion_Corrupcion']
-                      ] #lista con los otros datos de los votantes
+                      fila['Nivel_Educativo'], fila['Afiliacion_Politica'], fila['Intencion_Voto'], 
+                      fila['Disposicion_Cambiar_Voto'], fila['Participacion_Voto_Anterior']
+                     ] #lista con los otros datos de los votantes
     
     #asignamos la lista al dicc
     votantes[id_votantes] = datos_votantes
@@ -70,8 +73,19 @@ for i, fila in df.iterrows(): # .itemrrows() -> itera sobre las filas de DataFra
 participantes = {}
 
 for identificador, datos in votantes.items() :
-     datos_id = [identificador] + datos  # agrego el ID al principio
-     participantes[identificador] = Votante(*datos_id) #despues cambiar el desempaquetado (*)
+    datos_id = [identificador] + datos  # agrego el ID al principio
+    participante = Votante(*datos_id) #despues cambiar el desempaquetado (*)
+    participantes[identificador] = participante 
+    
+    if participante.intencion_voto == "Partido A":
+        partido_A.agregar_votantes(participante)
+    elif participante.intencion_voto == "Partido B":
+         partido_B.agregar_votantes(participante)
+    elif participante.intencion_voto == "Partido C":
+        partido_C.agregar_votantes(participante)
+    
+       
+
 #______________________________________________________________________________
 
 ### MENÚ 2
@@ -112,3 +126,4 @@ def actualizar_datos(archivo, ) :
 centro = df[df['Afiliacion_Politica'] == 'Centro'] # --> Partido A / Indeciso
 izquierda = df[df['Afiliacion_Politica'] == 'Izquierda'] # --> Partido C / Indeciso
 derecha = df[df['Afiliacion_Politica'] == 'Derecha'] # --> Partido B / Indeciso
+

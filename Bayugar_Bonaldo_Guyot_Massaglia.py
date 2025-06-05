@@ -62,11 +62,12 @@ votantes = {} #diccionario con datos de votantes guardados en una lista; {'id_vo
 
 for i, fila in df.iterrows(): # .itemrrows() -> itera sobre las filas de DataFrame como una tupla (índice, serie)
     id_votantes = fila['ID_Votante'] #guardamos los id en una variable
-    datos_votantes = [fila['Genero'], fila['Edad'], fila ['Circunscripcion'], fila['Nivel_Socioeconomico'], 
-                      fila['Nivel_Educativo'], fila['Afiliacion_Politica'], fila['Intencion_Voto'], 
-                      fila['Disposicion_Cambiar_Voto'], fila['Participacion_Voto_Anterior']
-                     ] #lista con los otros datos de los votantes
-    
+   datos_votantes = [fila['Genero'], fila['Edad'], fila ['Circunscripcion'], fila['Nivel_Socioeconomico'], 
+                      fila['Nivel_Educativo'], fila['Afiliacion_Politica'], fila['Interes_Politica'], fila['Intencion_Voto'], 
+                      fila['Disposicion_Cambiar_Voto'], fila['Participacion_Voto_Anterior'], fila['Preocupacion_Economica'], 
+                      fila['Preocupacion_Seguridad'], fila['Opinion_Gobierno_Actual'], fila['Percepcion_Corrupcion']
+                      ] #lista con los otros datos de los votantes
+
     #asignamos la lista al dicc
     votantes[id_votantes] = datos_votantes
     

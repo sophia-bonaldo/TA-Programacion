@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jun  3 14:20:43 2025
 
-@author: Sophie
-"""
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -62,16 +57,20 @@ class Partido :
 votantes = {} #diccionario con datos de votantes guardados en una lista; {'id_votantes': [...]}
 
 for i, fila in df.iterrows(): # .itemrrows() -> itera sobre las filas de DataFrame como una tupla (índice, serie)
-    id_votantes = fila['ID_VOTANTES'] #guardamos los id en una variable
+    id_votantes = fila['Id_Votante'] #guardamos los id en una variable
     datos_votantes = [fila['Genero'], fila['Edad'], fila ['Circunscripcion'], fila['Nivel_Socioeconomico'], 
                       fila['Nivel_Educativo'], fila['Afiliacion_Politica'], fila['Intencion_Voto'], 
-                      fila['Disposicion_Cambiar_Voto']
-                     ...
+                      fila['Disposicion_Cambiar_Voto'], fila['Participacion_Voto_Anterior']
                      ] #lista con los otros datos de los votantes
     
     #asignamos la lista al dicc
     votantes[id_votantes] = datos_votantes
+    
+participantes = {}
 
+for identificador, datos in votantes.items() :
+     datos_id = [identificador] + datos  # agrego el ID al principio
+    participantes[identificador] = Votante(*datos_id) #despues cambiar el desempaquetado (*)
 #______________________________________________________________________________
 
 ### MENÚ 2
@@ -112,3 +111,4 @@ def actualizar_datos(archivo, ) :
 centro = df[df['Afiliacion_Politica'] == 'Centro'] # --> Partido A / Indeciso
 izquierda = df[df['Afiliacion_Politica'] == 'Izquierda'] # --> Partido C / Indeciso
 derecha = df[df['Afiliacion_Politica'] == 'Derecha'] # --> Partido B / Indeciso
+

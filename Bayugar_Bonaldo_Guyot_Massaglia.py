@@ -58,20 +58,29 @@ class Partido :
         clase_media=[]
         clase_alta=[]
         for elemento in self.lista_votantes:
-           clase = participantes[elemento].nivel_socioeconomico
+           clase = elemento.nivel_socioeconomico
            if clase == "Baja":
                clase_baja.append(elemento)
            elif clase == "Media":
                 clase_media.append(elemento)
            elif clase == "Alta":
                 clase_alta.append(elemento)
-        
+        return clase_baja, clase_media, clase_alta
+
 
         
 partido_A = Partido("Partido A")
 partido_B = Partido("Partido B")
 partido_C = Partido("Partido C")
 
+def guardar_partidos(partido_A, partido_B, partido_C):
+    A_bajo, A_medio, A_alta = partido_A.clasificar_votantes()
+    B_bajo, B_medio, B_alta = partido_B.clasificar_votantes()
+    C_bajo, C_medio, C_alta = partido_C.clasificar_votantes()
+    print(A_bajo, A_medio, A_alta)
+    
+    
+    
 
 #______________________________________________________________________________
 #CÓDIGO PRINCIPAL     
@@ -92,7 +101,7 @@ partido_C = Partido("Partido C")
 
 ## FUNCIONES
 
-def carga_datos(archivo):
+def cargar_datos(archivo):
     df = pd.read_csv(archivo)
     
     participantes = {}

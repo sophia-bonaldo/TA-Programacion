@@ -49,8 +49,25 @@ class Partido :
         self.afiliacion_politica = afiliacion_politica
         self.lista_votantes = []#lista con los votantes afiliados a un partido
         #METODOS
+        
     def agregar_votantes(self,votante):
         self.lista_votantes.append(votante)
+        
+    def clasificar_votantes(self):
+        clase_baja=[]
+        clase_media=[]
+        clase_alta=[]
+        for elemento in self.lista_votantes:
+           clase = participantes[elemento].nivel_socioeconomico
+           if clase == "Baja":
+               clase_baja.append(elemento)
+           elif clase == "Media":
+                clase_media.append(elemento)
+           elif clase == "Alta":
+                clase_alta.append(elemento)
+        
+
+        
 partido_A = Partido("Partido A")
 partido_B = Partido("Partido B")
 partido_C = Partido("Partido C")
@@ -227,4 +244,4 @@ actualizar_datos(archivo, participantes)
 centro = df[df['Afiliacion_Politica'] == 'Centro'] # --> Partido A / Indeciso
 izquierda = df[df['Afiliacion_Politica'] == 'Izquierda'] # --> Partido C / Indeciso
 derecha = df[df['Afiliacion_Politica'] == 'Derecha'] # --> Partido B / Indeciso
-
+ 

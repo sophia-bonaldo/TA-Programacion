@@ -57,35 +57,7 @@ partido_C = Partido("Partido C")
 
 
 #______________________________________________________________________________
-#CÓDIGO PRINCIPAL
-votantes = {} #diccionario con datos de votantes guardados en una lista; {'id_votantes': [...]}
-
-for i, fila in df.iterrows(): # .itemrrows() -> itera sobre las filas de DataFrame como una tupla (índice, serie)
-    id_votantes = fila['ID_Votante'] #guardamos los id en una variable
-   datos_votantes = [fila['Genero'], fila['Edad'], fila ['Circunscripcion'], fila['Nivel_Socioeconomico'], 
-                      fila['Nivel_Educativo'], fila['Afiliacion_Politica'], fila['Interes_Politica'], fila['Intencion_Voto'], 
-                      fila['Disposicion_Cambiar_Voto'], fila['Participacion_Voto_Anterior'], fila['Preocupacion_Economica'], 
-                      fila['Preocupacion_Seguridad'], fila['Opinion_Gobierno_Actual'], fila['Percepcion_Corrupcion']
-                      ] #lista con los otros datos de los votantes
-
-    #asignamos la lista al dicc
-    votantes[id_votantes] = datos_votantes
-    
-participantes = {}
-
-for identificador, datos in votantes.items() :
-    datos_id = [identificador] + datos  # agrego el ID al principio
-    participante = Votante(*datos_id) #despues cambiar el desempaquetado (*)
-    participantes[identificador] = participante 
-    
-    if participante.intencion_voto == "Partido A":
-        partido_A.agregar_votantes(participante)
-    elif participante.intencion_voto == "Partido B":
-         partido_B.agregar_votantes(participante)
-    elif participante.intencion_voto == "Partido C":
-        partido_C.agregar_votantes(participante)
-    
-       
+#CÓDIGO PRINCIPAL     
 
 #______________________________________________________________________________
 
@@ -103,11 +75,139 @@ for identificador, datos in votantes.items() :
 
 ## FUNCIONES
 
-def carga_datos(archivo) :
-    ...
+def carga_datos(archivo):
+    df = pd.read_csv(archivo)
+    
+    participantes = {}
+    
+    columnas = list(df.columns)
+    
+    for i, fila in df.iterrows():
+        valores = []
+        for col in columnas :
+            valor = fila[col]  # obtenemos el valor que corresponde a la columna actual
+            valores.append(valor)  # lo agregamos a la lista de valores
+      
+        participante = Votante(*valores)
+        participantes[fila['ID_Votante']] = participante
+        
+        if participante.intencion_voto == "Partido A":
+            partido_A.agregar_votantes(participante)
+        
+        elif participante.intencion_voto == "Partido B":
+            partido_B.agregar_votantes(participante)
+        
+        elif participante.intencion_voto == "Partido C":
+            partido_C.agregar_votantes(participante)
+    
+    return participantes, df
 
-def actualizar_datos(archivo, ) :
-    ...
+
+def actualizar_datos(archivo, participantes):
+    try:
+        filas = []
+        ids_vistos = set() # set() -> se fija si el id ya apareció antes y si no hay coincidencia lo guarda
+        
+        for votante in participantes.values():
+            if votante.id_votante in ids_vistos :
+                raise ValueError(f"ID duplicado encontrado: {votante.id_votante}")
+            
+            ids_vistos.add(votante.id_votante)
+            
+            fila = {
+                'ID_Votante': votante.id_votante,
+                'Genero': votante.genero,
+                'Edad': votante.edad,
+                
+                'Circunscripcion': votante.circunscripcion,
+                'Nivel_Socioeconomico': votante.nivel_socioeconomico,
+                'Nivel_Educativo': votante.nivel_educativo,
+                
+                'Afiliacion_Politica': votante.afiliacion_politica,
+                'Interes_Politica': votante.interes_politica,
+                
+                'Preocupacion_Economia': votante.preocupacion_economia,
+                'Preocupacion_Seguridad': votante.preocupacion_seguridad,
+                
+                'Opinion_Gobierno_Actual': votante.opinion_gobierno_actual,
+                'Percepcion_Corrupcion': votante.percepcion_corrupcion,
+                
+                'Intencion_Voto': votante.intencion_voto,
+                'Disposicion_Cambiar_Voto': votante.dispocision_cambiar_voto,
+                'Participacion_Voto_Anterior': votante.participacion_voto_anterior
+            }
+            
+            filas.append(fila)
+        
+        df_actualizado = pd.DataFrame(filas)
+        df_actualizado.to_csv(archivo, index = False) # el index = False, hace que solo muestre la información del DataFrame, sin el índice que esta función crea.
+        print("Archivo CSV actualizado correctamente.")
+   
+    except ValueError as error:
+        print(f"Error de validación de datos: {error}")
+    
+    except Exception as e:
+        print(f"Error al actualizar el archivo: {e}")
+
+
+def modificar_registro(df, participantes, archivo) :
+    try:
+        id_modificar = int(input("Ingrese el ID del votante que desea modificar: "))
+    
+    except ValueError:
+        print("Debe ingresar un número válido.")
+        return participantes
+
+    if id_modificar not in df['ID_Votante'].values:
+        print("Ese ID no se encuentra en el archivo.")
+        return participantes
+
+    indice_fila = df[df['ID_Votante'] == id_modificar].index[0]
+    
+    print("\nDatos actuales del votante: ")
+    print(df.loc[indice_fila])
+
+    columnas = list(df.columns)
+    columnas.remove('ID_Votante')
+    
+    print("\nCampos disponibles para modificar: ")
+    print(columnas)
+
+    while True :
+        campo = input("Ingrese el campo a modificar (o 'fin' para terminar): ")
+        
+        if campo == 'fin':
+            break
+        
+        if campo not in columnas:
+            print("Campo inválido.")
+            continue
+        
+        nuevo_valor = input(f"Nuevo valor para {campo}: ")
+        df.at[indice_fila, campo] = nuevo_valor #### ----------> FIJARSE QUÉ ES .at[]
+
+    df.to_csv(archivo, index = False)
+    
+    fila = df.loc[indice_fila]
+    
+    participantes[id_modificar] = Votante(
+        fila['ID_Votante'], fila['Genero'], fila['Edad'], 
+        fila['Circunscripcion'], fila['Nivel_Socioeconomico'], 
+        fila['Nivel_Educativo'], fila['Afiliacion_Politica'],
+        fila['Interes_Politica'], fila['Preocupacion_Economia'], 
+        fila['Preocupacion_Seguridad'], fila['Opinion_Gobierno_Actual'], 
+        fila['Percepcion_Corrupcion'], fila['Intencion_Voto'],
+        fila['Disposicion_Cambiar_Voto'], fila['Participacion_Voto_Anterior']
+    )
+    
+    return participantes
+
+
+archivo = 'Decision_Voto_Elecciones.csv'
+participantes, df = carga_datos(archivo)
+
+participantes = modificar_registro(df, participantes, archivo)
+actualizar_datos(archivo, participantes)
 
 #______________________________________________________________________________
 

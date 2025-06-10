@@ -53,18 +53,22 @@ class Partido :
     def agregar_votantes(self,votante):
         self.lista_votantes.append(votante)
         
-    def clasificar_votantes(self):
+    def clasificar_votantes(self,dicc_personas):
         clase_baja=[]
         clase_media=[]
         clase_alta=[]
-        for elemento in self.lista_votantes:
-           clase = elemento.nivel_socioeconomico
-           if clase == "Baja":
-               clase_baja.append(elemento)
-           elif clase == "Media":
-                clase_media.append(elemento)
-           elif clase == "Alta":
-                clase_alta.append(elemento)
+        for clave, valor in dicc_personas.items():
+            for votante in self.lista_votantes:
+                if clave == votante:
+                    clase = valor.nivel_socioeconomico
+                    if clase == "Baja":
+                        clase_baja.append(votante)
+                    elif clase == "Media":
+                         clase_media.append(votante)
+                    elif clase == "Alta":
+                         clase_alta.append(votante)
+
+           
         return clase_baja, clase_media, clase_alta
 
 
@@ -104,29 +108,28 @@ def guardar_partidos(partido_A, partido_B, partido_C):
 def cargar_datos(archivo):
     df = pd.read_csv(archivo)
     
-    participantes = {}
-    
+    personas = {}
     columnas = list(df.columns)
+    
     
     for i, fila in df.iterrows():
         valores = []
         for col in columnas :
             valor = fila[col]  # obtenemos el valor que corresponde a la columna actual
             valores.append(valor)  # lo agregamos a la lista de valores
-      
-        participante = Votante(*valores)
-        participantes[fila['ID_Votante']] = participante
+        nombre = i
+        persona = Votante(* valores)
+        personas[nombre] = persona
         
-        if participante.intencion_voto == "Partido A":
-            partido_A.agregar_votantes(participante)
+        if persona.intencion_voto == "Partido A":
+            partido_A.agregar_votantes(nombre)
+        elif persona.intencion_voto == "Partido B":
+            partido_B.agregar_votantes(nombre)
         
-        elif participante.intencion_voto == "Partido B":
-            partido_B.agregar_votantes(participante)
-        
-        elif participante.intencion_voto == "Partido C":
-            partido_C.agregar_votantes(participante)
+        elif persona.intencion_voto == "Partido C":
+            partido_C.agregar_votantes(nombre)
     
-    return participantes, df
+    return personas, df
 
 
 def actualizar_datos(archivo, participantes):
@@ -230,7 +233,7 @@ def modificar_registro(df, participantes, archivo) :
 
 
 archivo = 'Decision_Voto_Elecciones.csv'
-participantes, df = carga_datos(archivo)
+participantes, df = cargar_datos(archivo)
 
 participantes = modificar_registro(df, participantes, archivo)
 actualizar_datos(archivo, participantes)

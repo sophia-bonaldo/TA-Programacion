@@ -77,10 +77,10 @@ partido_A = Partido("Partido A")
 partido_B = Partido("Partido B")
 partido_C = Partido("Partido C")
 
-def guardar_partidos(partido_A, partido_B, partido_C):
-    A_bajo, A_medio, A_alta = partido_A.clasificar_votantes()
-    B_bajo, B_medio, B_alta = partido_B.clasificar_votantes()
-    C_bajo, C_medio, C_alta = partido_C.clasificar_votantes()
+def guardar_partidos(partido_A, partido_B, partido_C,diccionario):
+    A_bajo, A_medio, A_alta = partido_A.clasificar_votantes(diccionario)
+    B_bajo, B_medio, B_alta = partido_B.clasificar_votantes(diccionario)
+    C_bajo, C_medio, C_alta = partido_C.clasificar_votantes(diccionario)
     print(A_bajo, A_medio, A_alta)
     
     
@@ -108,19 +108,19 @@ def guardar_partidos(partido_A, partido_B, partido_C):
 def cargar_datos(archivo):
     df = pd.read_csv(archivo)
     
-    personas = {}
+    dicc_personas = {}
     columnas = list(df.columns)
     
-    
+    identificador = 1
     for i, fila in df.iterrows():
         valores = []
         for col in columnas :
             valor = fila[col]  # obtenemos el valor que corresponde a la columna actual
             valores.append(valor)  # lo agregamos a la lista de valores
-        nombre = i
+        nombre = identificador
         persona = Votante(* valores)
-        personas[nombre] = persona
-        
+        dicc_personas[nombre] = persona
+        identificador += 1
         if persona.intencion_voto == "Partido A":
             partido_A.agregar_votantes(nombre)
         elif persona.intencion_voto == "Partido B":
@@ -129,8 +129,7 @@ def cargar_datos(archivo):
         elif persona.intencion_voto == "Partido C":
             partido_C.agregar_votantes(nombre)
     
-    return personas, df
-
+    return dicc_personas, df
 
 def actualizar_datos(archivo, participantes):
     try:
@@ -235,8 +234,8 @@ def modificar_registro(df, participantes, archivo) :
 archivo = 'Decision_Voto_Elecciones.csv'
 participantes, df = cargar_datos(archivo)
 
-participantes = modificar_registro(df, participantes, archivo)
-actualizar_datos(archivo, participantes)
+#participantes = modificar_registro(df, participantes, archivo)
+#actualizar_datos(archivo, participantes)
 
 #______________________________________________________________________________
 

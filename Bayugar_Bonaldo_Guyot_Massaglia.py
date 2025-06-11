@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 #cargar BD
 df = pd.read_csv('Decision_Voto_Elecciones.csv')
@@ -53,23 +54,30 @@ class Partido :
     def agregar_votantes(self,votante):
         self.lista_votantes.append(votante)
         
-    def clasificar_votantes(self,dicc_personas):
-        clase_baja=[]
-        clase_media=[]
-        clase_alta=[]
-        for clave, valor in dicc_personas.items():
-            for votante in self.lista_votantes:
-                if clave == votante:
-                    clase = valor.nivel_socioeconomico
-                    if clase == "Baja":
-                        clase_baja.append(votante)
-                    elif clase == "Media":
-                         clase_media.append(votante)
-                    elif clase == "Alta":
-                         clase_alta.append(votante)
+
+    def clasificar_votantes(self, dicc_personas):
+        clase_baja = []
+        clase_media = []
+        clase_alta = []
+    
+        for votante_id in self.lista_votantes:
+            votante = dicc_personas[votante_id]
+            clase = votante.nivel_socioeconomico
+            if clase == "Bajo":
+                clase_baja.append(votante_id)
+            elif clase == "Medio":
+                clase_media.append(votante_id)
+            elif clase == "Alto":
+                clase_alta.append(votante_id)
+    
+        return clase_baja, clase_media, clase_alta
+    
+    
+    def total_votantes(self):
+        return len(self.lista_votantes)
 
            
-        return clase_baja, clase_media, clase_alta
+       
 
 
         
@@ -230,6 +238,21 @@ def modificar_registro(df, participantes, archivo) :
     
     return participantes
 
+def mostrar_resultados_elecciones(partido_A, partido_B, partido_C):
+    votos_A = partido_A.total_votantes()
+    votos_B = partido_B.total_votantes()
+    votos_C = partido_C.total_votantes()
+    
+    if votos_A > votos_B and votos_A > votos_C:
+        print(f"Partido A ganó con {votos_A} votos.")
+    elif votos_B > votos_A and votos_B > votos_C:
+        print(f"Partido B ganó con {votos_B} votos.")
+    elif votos_C > votos_A and votos_C > votos_B:
+        print(f"Partido C ganó con {votos_C} votos.")
+    else:
+        print("Empate")
+    
+    return votos_A, votos_B, votos_C
 
 archivo = 'Decision_Voto_Elecciones.csv'
 participantes, df = cargar_datos(archivo)
@@ -245,10 +268,37 @@ participantes, df = cargar_datos(archivo)
 
 ## 1. Gráfico de Barras
 
-## 2. Gráfico de Torta
+## 2. Gráfico de Torta - HACERLO MAS LINDOOO
+
+# Llamamos a la función mostrar_resultados_elecciones y obtenemos los votos
+votos_A, votos_B, votos_C = mostrar_resultados_elecciones(partido_A, partido_B, partido_C)
+
+# Contamos los votos indecisos de la columna 'Intencion_Voto'
+votos_indecisos = df[df['Intencion_Voto'] == 'Indeciso'].shape[0]
+
+#Creamos el gráfico
+plt.style.use('_mpl-gallery-nogrid')
+
+labels = ['Partido A', 'Partido B', 'Partido C', 'Indecisos']
+sizes = [votos_A, votos_B, votos_C, votos_indecisos] #PREGUNTAR QUE ES
+colors = ['#66b3ff', '#99ff99', '#ffb3e6', '#c2c2f0']  # Colores para cada sección
+
+fig, ax = plt.subplots(figsize=(8, 8))
+#ax.pie(x, colors=colors, radius=3, center=(4, 4),
+       #wedgeprops={"linewidth": 1, "edgecolor": "white"}, frame=True)
+
+ax.pie(sizes, labels=labels, autopct='%1.1f%%', colors=colors, startangle=90, wedgeprops={"linewidth": 1, "edgecolor": "black"})
+ax.set_title('Resultados de las Elecciones (Votantes por Partido y Indecisos)')
+
+#ax.set(xlim=(0, 8), xticks=np.arange(1, 8),
+      # ylim=(0, 8), yticks=np.arange(1, 8))
+
+# Aseguramos que el gráfico sea circular
+plt.axis('equal')
+plt.show()
 
 ## 3. Mostrar resultados df por consola
-
+mostrar_resultados_elecciones(partido_A, partido_B, partido_C)
 #______________________________________________________________________________
 
 ##LAMADOS DE DATOS PARA VERIFICAR COSAS

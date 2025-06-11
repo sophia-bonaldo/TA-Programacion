@@ -10,4 +10,4 @@ set() -> colección de elementos únicos (guarda a los sin incidencias previas)
 
 gráfico de torta -> https://matplotlib.org/stable/plot_types/stats/pie.html#sphx-glr-plot-types-stats-pie-py
 
-gráfico de barra -> https://matplotlib.org/stable/plot_types/basic/bar.html#sphx-glr-plot-types-basic-bar-py
+gráfico 'Grouped bar chart with labels' -> http://matplotlib.org/stable/gallery/lines_bars_and_markers/barchart.html

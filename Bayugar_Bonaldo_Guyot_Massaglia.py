@@ -75,27 +75,13 @@ class Partido :
     
     def total_votantes(self):
         return len(self.lista_votantes)
+     
+archivo = 'Decision_Voto_Elecciones.csv'
 
-           
-       
-
-
-        
+#Instancias de Objetos        
 partido_A = Partido("Partido A")
 partido_B = Partido("Partido B")
 partido_C = Partido("Partido C")
-
-def guardar_partidos(partido_A, partido_B, partido_C,diccionario):
-    A_bajo, A_medio, A_alta = partido_A.clasificar_votantes(diccionario)
-    B_bajo, B_medio, B_alta = partido_B.clasificar_votantes(diccionario)
-    C_bajo, C_medio, C_alta = partido_C.clasificar_votantes(diccionario)
-    print(A_bajo, A_medio, A_alta)
-    
-    
-    
-
-#______________________________________________________________________________
-#CÓDIGO PRINCIPAL     
 
 #______________________________________________________________________________
 
@@ -110,6 +96,7 @@ def guardar_partidos(partido_A, partido_B, partido_C,diccionario):
 ## 4. Máximo de Votos (ganador elecciones)
 
 ## 5. Volver al Menú anterior
+#______________________________________________________________________________
 
 ## FUNCIONES
 
@@ -129,6 +116,7 @@ def cargar_datos(archivo):
         persona = Votante(* valores)
         dicc_personas[nombre] = persona
         identificador += 1
+        
         if persona.intencion_voto == "Partido A":
             partido_A.agregar_votantes(nombre)
         elif persona.intencion_voto == "Partido B":
@@ -254,11 +242,26 @@ def mostrar_resultados_elecciones(partido_A, partido_B, partido_C):
     
     return votos_A, votos_B, votos_C
 
-archivo = 'Decision_Voto_Elecciones.csv'
-participantes, df = cargar_datos(archivo)
+def clasificar_nivel_socioeconomico(partido_A, partido_B, partido_C, diccionario) : #CAMBIAR NOMBRE FUNCION 
+    A_bajo, A_medio, A_alta = partido_A.clasificar_votantes(diccionario)
+    B_bajo, B_medio, B_alta = partido_B.clasificar_votantes(diccionario)
+    C_bajo, C_medio, C_alta = partido_C.clasificar_votantes(diccionario)
+    
+    #Cantidad por condición socioeconomica    
+    cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto = len(A_bajo), len(A_medio), len(A_alta)
+    cantidad_B_bajo, cantidad_B_medio, cantidad_B_alto = len(B_bajo), len(B_medio), len(B_alta)
+    cantidad_C_bajo, cantidad_C_medio, cantidad_C_alto = len(C_bajo), len(C_medio), len(C_alta)
+    
+    return cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad_B_bajo, cantidad_B_medio, cantidad_B_alto, cantidad_C_bajo, cantidad_C_medio, cantidad_C_alto
+    
 
-#participantes = modificar_registro(df, participantes, archivo)
-#actualizar_datos(archivo, participantes)
+
+#CÓDIGO PRINCIPAL
+participantes, df = cargar_datos(archivo)    
+participantes = modificar_registro(df, participantes, archivo)
+actualizar_datos(archivo, participantes)
+
+cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad_B_bajo, cantidad_B_medio, cantidad_B_alto, cantidad_C_bajo, cantidad_C_medio, cantidad_C_alto = clasificar_nivel_socioeconomico(partido_A, partido_B, partido_C, participantes)
 
 #______________________________________________________________________________
 
@@ -266,9 +269,42 @@ participantes, df = cargar_datos(archivo)
 
 ### MENÚ 3
 
-## 1. Gráfico de Barras
+## 1. Gráfico de Barras - CAMBIAR EL FORMATO XQ SE VE RARO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-## 2. Gráfico de Torta - HACERLO MAS LINDOOO
+# Datos (reemplazá estos con los valores reales obtenidos de la función)
+partidos = ("Partido A", "Partido B", "Partido C")
+nivel_socioeconomico = {
+    'Bajo': (cantidad_A_bajo, cantidad_B_bajo, cantidad_C_bajo),
+    'Medio': (cantidad_A_medio, cantidad_B_medio, cantidad_C_medio),
+    'Alto': (cantidad_A_alto, cantidad_B_alto, cantidad_C_alto),
+}
+
+x = np.arange(len(partidos))  # posiciones para las barras
+width = 0.25  # ancho de cada barra
+multiplier = 0
+
+fig, ax = plt.subplots(layout='constrained')
+
+# Dibujar barras para cada nivel socioeconómico
+for nivel, valores in nivel_socioeconomico.items():
+    offset = width * multiplier
+    rects = ax.bar(x + offset, valores, width, label=nivel)
+    ax.bar_label(rects, padding=3)
+    multiplier += 1
+
+# Etiquetas y estética
+ax.set_ylabel('Cantidad de votantes')
+ax.set_title('Resultado de las elecciones (clasificado por sector socioeconómico)')
+ax.set_xticks(x + width, partidos)
+ax.legend(title='Nivel socioeconómico', loc='upper left', ncols=3)
+ax.set_ylim(0, max(map(max, nivel_socioeconomico.values())) + 5)
+
+plt.show()
+
+
+
+
+## 2. Gráfico de Torta - DOCUMENTAR MEJOR LO QUE HICIMOS
 
 # Llamamos a la función mostrar_resultados_elecciones y obtenemos los votos
 votos_A, votos_B, votos_C = mostrar_resultados_elecciones(partido_A, partido_B, partido_C)
@@ -281,21 +317,30 @@ plt.style.use('_mpl-gallery-nogrid')
 
 labels = ['Partido A', 'Partido B', 'Partido C', 'Indecisos']
 sizes = [votos_A, votos_B, votos_C, votos_indecisos] #PREGUNTAR QUE ES
-colors = ['#66b3ff', '#99ff99', '#ffb3e6', '#c2c2f0']  # Colores para cada sección
+#colors = ['#66b3ff', '#99ff99', '#ffb3e6', '#c2c2f0']  # Colores para cada sección
+colors = plt.get_cmap('Blues')(np.linspace(0.3, 0.7, len(sizes)))
 
 fig, ax = plt.subplots(figsize=(8, 8))
-#ax.pie(x, colors=colors, radius=3, center=(4, 4),
-       #wedgeprops={"linewidth": 1, "edgecolor": "white"}, frame=True)
 
-ax.pie(sizes, labels=labels, autopct='%1.1f%%', colors=colors, startangle=90, wedgeprops={"linewidth": 1, "edgecolor": "black"})
-ax.set_title('Resultados de las Elecciones (Votantes por Partido y Indecisos)')
+wedges, texts, autotexts = ax.pie(sizes, autopct ='%1.1f%%', colors = colors, startangle = 90, 
+       wedgeprops = {"linewidth": 1, "edgecolor": "white"})
 
-#ax.set(xlim=(0, 8), xticks=np.arange(1, 8),
-      # ylim=(0, 8), yticks=np.arange(1, 8))
+for text in autotexts:
+    text.set_color('white')           # Color del texto interno
+    text.set_fontsize(12)             # Tamaño de fuente
+    text.set_fontweight('bold')       # Negrita (opcional)
+    text.set_fontfamily('sans-serif') # Tipo de fuente (opcional)
+ 
+# Agregar leyenda en esquina inferior derecha
+ax.legend(wedges, labels, loc='lower right')
+
+ax.set_title('Resultados de las Elecciones')
 
 # Aseguramos que el gráfico sea circular
 plt.axis('equal')
+plt.tight_layout()
 plt.show()
+
 
 ## 3. Mostrar resultados df por consola
 mostrar_resultados_elecciones(partido_A, partido_B, partido_C)

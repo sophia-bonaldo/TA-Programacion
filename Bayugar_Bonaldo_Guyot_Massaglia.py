@@ -1,13 +1,25 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jun 12 15:45:43 2025
+
+@author: msosa
+"""
+
+#importamos el módulo
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+#configurar el working directory en la ruta del archivo
+ruta = r"C:\Users\msosa\Documents\ayme\programacion"
+os.chdir(ruta)
+#verificación de current working directory
 
+#Luego, para trabajar con el archivo se utiliza solamente el nombre
+archivo = "Decision_Voto_Elecciones.csv"
 #cargar BD
-df = pd.read_csv('Decision_Voto_Elecciones.csv')
 
-#______________________________________________________________________________
-
-### MENÚ 1
+df = pd.read_csv(archivo)
 
 # i. MODELADO DE DATOS
 
@@ -49,8 +61,8 @@ class Partido :
     def __init__(self, afiliacion_politica) :
         self.afiliacion_politica = afiliacion_politica
         self.lista_votantes = []#lista con los votantes afiliados a un partido
-        #METODOS
-        
+      
+        #METODOS  
     def agregar_votantes(self,votante):
         self.lista_votantes.append(votante)
         
@@ -72,35 +84,12 @@ class Partido :
     
         return clase_baja, clase_media, clase_alta
     
-    
     def total_votantes(self):
         return len(self.lista_votantes)
-     
-archivo = 'Decision_Voto_Elecciones.csv'
-
-#Instancias de Objetos        
-partido_A = Partido("Partido A")
-partido_B = Partido("Partido B")
-partido_C = Partido("Partido C")
-
-#______________________________________________________________________________
-
-### MENÚ 2
-
-## 1. Agregar Registros
-
-## 2. Modificar Registros
-
-## 3. Promedio Votos
-
-## 4. Máximo de Votos (ganador elecciones)
-
-## 5. Volver al Menú anterior
-#______________________________________________________________________________
 
 ## FUNCIONES
 
-def cargar_datos(archivo):
+def cargar_datos(archivo,partido_A,partido_B,partido_C):
     df = pd.read_csv(archivo)
     
     dicc_personas = {}
@@ -274,14 +263,7 @@ def predecir_votantes_elecciones(df, umbral = 4.0) :
     print(f'Se estima que votarán en las elecciones {total_votantes_estimado} personas o el {porcentaje_redondeado}% del total.')
 
     return total_votantes_estimado, porcentaje_redondeado
-   
 
-#CÓDIGO PRINCIPAL
-participantes, df = cargar_datos(archivo)    
-participantes = modificar_registro(df, participantes, archivo)
-actualizar_datos(archivo, participantes)
-
-cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad_B_bajo, cantidad_B_medio, cantidad_B_alto, cantidad_C_bajo, cantidad_C_medio, cantidad_C_alto = clasificar_nivel_socioeconomico(partido_A, partido_B, partido_C, participantes)
 
 #______________________________________________________________________________
 
@@ -290,7 +272,7 @@ cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad_B_bajo, cantidad_B_
 ### MENÚ 3
 
 ## 1. Gráfico de Barras
-def graficar_barras() :
+def graficar_barras(cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad_B_bajo, cantidad_B_medio, cantidad_B_alto, cantidad_C_bajo, cantidad_C_medio, cantidad_C_alto):
     # Datos utilizados (reemplazá estos con los valores reales obtenidos de la función)
     partidos = ("Partido A", "Partido B", "Partido C")
     nivel_socioeconomico = {
@@ -325,7 +307,7 @@ def graficar_barras() :
 
 ## 2. Gráfico de Torta - DOCUMENTAR MEJOR LO QUE HICIMOS
 
-def graficar_torta() :
+def graficar_torta(partido_A, partido_B, partido_C) :
     # Llamamos a la función mostrar_resultados_elecciones y obtenemos los votos
     votos_A, votos_B, votos_C = mostrar_resultados_elecciones(partido_A, partido_B, partido_C)
     
@@ -360,16 +342,90 @@ def graficar_torta() :
     plt.tight_layout()
     plt.show()
 
-#Llamamos a los gráficos
-graficar_barras()
-graficar_torta()
 
-## 3. Mostrar resultados df por consola
-mostrar_resultados_elecciones(partido_A, partido_B, partido_C)
-#______________________________________________________________________________
+def menu_2(archivo):
+    print("menu 2: opcion 1 agregar registro, opcion 2 modificar registro, opcion 3 partido ganador, opcion 4  clasificacion segun nivel socioeconomico, opcion 5 volver a menu 1")
+    opcion = int(input("ingrese el numero de la opcion que desea"))
+    #Instancias de Objetos        
+    partido_A = Partido("Partido A")
+    partido_B = Partido("Partido B")
+    partido_C = Partido("Partido C")
+    participantes, df = cargar_datos(archivo,partido_A,partido_B,partido_C) 
+    while opcion != 5:
+        if opcion == 1:
+            print("no se que poner")
+            #llamo a??
+        elif opcion == 2:
+            participantes = modificar_registro(df, participantes, archivo)
+            actualizar_datos(archivo, participantes)
+            #modificar datos funcion
+        elif opcion == 3:
+            mostrar_resultados_elecciones(partido_A, partido_B, partido_C) # llamo a la funcion de que partido gana
+        elif opcion == 4:
+            cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad_B_bajo, cantidad_B_medio, cantidad_B_alto, cantidad_C_bajo, cantidad_C_medio, cantidad_C_alto = clasificar_nivel_socioeconomico(partido_A, partido_B, partido_C, participantes)
+        opcion = int(input("ingrese el numero de la opcion que desea"))
+        #else:
+         #   raise ValueError
+    
+    if opcion == 5:
+        menu(df)
+   
+        
+    
+        # llamo a la funcion de clasificar nivel socio economico
 
-##LAMADOS DE DATOS PARA VERIFICAR COSAS
-centro = df[df['Afiliacion_Politica'] == 'Centro'] # --> Partido A / Indeciso
-izquierda = df[df['Afiliacion_Politica'] == 'Izquierda'] # --> Partido C / Indeciso
-derecha = df[df['Afiliacion_Politica'] == 'Derecha'] # --> Partido B / Indeciso
- 
+    
+
+def menu_3(participantes, df,partido_A,partido_B,partido_C ):
+    print("menu 3: opcion 1 grafico de barras, opcion 2 grafico de torta, opcion 3 imprimir datos, opcion 4 volver a menu 1")
+    opcion = int(input("ingrese el numero de la opcion que desea"))
+    while opcion != 4:
+        if opcion == 1:
+            cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad_B_bajo, cantidad_B_medio, cantidad_B_alto, cantidad_C_bajo, cantidad_C_medio, cantidad_C_alto = clasificar_nivel_socioeconomico(partido_A, partido_B, partido_C, participantes)
+            graficar_barras(cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad_B_bajo, cantidad_B_medio, cantidad_B_alto, cantidad_C_bajo, cantidad_C_medio, cantidad_C_alto)
+        elif opcion == 2:
+            mostrar_resultados_elecciones(partido_A, partido_B, partido_C)
+            graficar_torta(partido_A, partido_B, partido_C)
+            # funcion de la barra de torta
+            # los de el menu 2
+        elif opcion == 3:
+            mostrar_resultados_elecciones(partido_A, partido_B, partido_C)
+            predecir_votantes_elecciones(df, umbral = 4.0)
+          #else:
+           #   raise ValueError 
+        opcion = int(input("ingrese el numero de la opcion que desea"))
+    if opcion == 4:
+        menu(df)
+     
+        
+def validar_carga_datos(df,archivo):
+    if df.empty:
+        return False
+    else:
+        return True
+
+
+def menu(df):
+    print("menu 1: opcion 1 modelar datos, opcion 2 analizar datos, opcion 3 fin")
+    opcion = int(input("ingrese el numero de la opcion que desea"))
+    if opcion == 1:
+        menu_2(archivo)
+    elif opcion == 2:
+        # Instancias de Objetos        
+            partido_A = Partido("Partido A")
+            partido_B = Partido("Partido B")
+            partido_C = Partido("Partido C")
+        
+            validacion = validar_carga_datos(df, archivo)
+            if not validacion:
+                  participantes, df = cargar_datos(archivo, partido_A, partido_B, partido_C)
+            else:
+                participantes, _ = cargar_datos(archivo, partido_A, partido_B, partido_C)  # Volvés a cargar aunque ya esté validado
+
+            menu_3(participantes, df, partido_A, partido_B, partido_C)
+            
+    elif opcion == 3:
+            print("se a terminado el programa ")
+    #else:
+     #   raise ValueError
+menu(df)

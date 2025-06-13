@@ -1,18 +1,11 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Jun 13 15:46:29 2025
-
-@author: msosa
-"""
-
-import os
+#import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
 #configurar el working directory en la ruta del archivo
-ruta = r"C:\Users\msosa\Documents\ayme\programacion"
-os.chdir(ruta)
+#ruta = r"C:\Users\msosa\Documents\ayme\programacion"
+#os.chdir(ruta)
 
 #verificación de current working directory
 
@@ -88,7 +81,7 @@ class Partido :
 
 ## FUNCIONES
 
-def cargar_datos(archivo,partido_A,partido_B,partido_C):
+def cargar_datos(archivo, partido_A, partido_B, partido_C):
     '''
     Clasifica a los votantes en tres partidos políticos.Lee un archivo CSV y los clasifica en tres 
     partidos políticos sacando los datos de la columna 'Intencion_Voto'. Se agregan a los votantes a 
@@ -128,7 +121,13 @@ def cargar_datos(archivo,partido_A,partido_B,partido_C):
             valores.append(valor)  # lo agregamos a la lista de valores
         
         nombre = identificador
-        persona = Votante(* valores)
+        
+        try:
+            persona = Votante(* valores)
+        
+        except TypeError as e:
+            print(f"Error al crear Votante en la fila {i+1}: {e}")
+        
         
         dicc_personas[nombre] = persona
         identificador += 1
@@ -245,52 +244,6 @@ def agregar_registro(participantes, partido_A, partido_B, partido_C):
         partido_C.agregar_votantes(ultimo_id)
      
     
-def actualizar_datos(archivo, participantes):
-    try:
-        filas = []
-        ids_vistos = set() # set() -> se fija si el id ya apareció antes y si no hay coincidencia lo guarda
-        
-        for votante in participantes.values():
-            if votante.id_votante in ids_vistos :
-                raise ValueError(f"ID duplicado encontrado: {votante.id_votante}")
-            
-            ids_vistos.add(votante.id_votante)
-            
-            fila = {
-                'ID_Votante': votante.id_votante,
-                'Genero': votante.genero,
-                'Edad': votante.edad,
-                
-                'Circunscripcion': votante.circunscripcion,
-                'Nivel_Socioeconomico': votante.nivel_socioeconomico,
-                'Nivel_Educativo': votante.nivel_educativo,
-                
-                'Afiliacion_Politica': votante.afiliacion_politica,
-                'Interes_Politica': votante.interes_politica,
-                
-                'Preocupacion_Economia': votante.preocupacion_economica,
-                'Preocupacion_Seguridad': votante.preocupacion_seguridad,
-                
-                'Opinion_Gobierno_Actual': votante.opinion_gobierno_actual,
-                'Percepcion_Corrupcion': votante.percepcion_corrupcion,
-                
-                'Intencion_Voto': votante.intencion_voto,
-                'Disposicion_Cambiar_Voto': votante.dispocision_cambiar_voto,
-                'Participacion_Voto_Anterior': votante.participacion_voto_anterior
-            }
-            
-            filas.append(fila)
-        
-        df_actualizado = pd.DataFrame(filas)
-        df_actualizado.to_csv(archivo, index = False) # el index = False, hace que solo muestre la información del DataFrame, sin el índice que esta función crea.
-        print("Archivo CSV actualizado correctamente.")
-   
-    except ValueError as error:
-        print(f"Error de validación de datos: {error}")
-    
-    except Exception as e:
-        print(f"Error al actualizar el archivo: {e}")
-
 
 def actualizar_datos(archivo, participantes) :
     '''
@@ -903,9 +856,6 @@ def menu(df):
     except ValueError:
         print("ingrese una de las opciones ofrecidad")
         
-            
-    
-    
     
 
 #Llamamos al MENU 1

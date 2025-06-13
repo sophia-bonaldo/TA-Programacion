@@ -172,68 +172,66 @@ def agregar_registro(participantes, partido_A, partido_B, partido_C):
     
     ultimo_id = max(participantes.keys()) + 1 #### COMENTARIO: EXPLICAR QUÉ HACE
     
-    genero = input("Ingrese el género (Femenino/Masculino/Otro): ")
+    genero = input("Ingrese el género (Femenino/Masculino/Otro): ").capitalize()
     while genero not in ["Masculino", "Femenino", "Otro"]:
-        genero = input("Ingrese el género (Femenino/Masculino/Otro): ")
+        genero = input("Ingrese el género (Femenino/Masculino/Otro): ").capitalize()
     
     edad = input("Ingrese la edad: ")
     while not edad.isdigit() or int(edad) <= 0:
         edad = input("Ingrese una edad válida: ")
         
     print('Circunscripción electoral a la que pertenece el votante (Norte/Sur/Este/Oeste/Centro).')
-    circuncripcion = input("Ingrese la circuncripcion: ")
+    circuncripcion = input("Ingrese la circuncripcion: ").capitalize()
     
     while circuncripcion not in ["Norte", "Sur", "Este", "Oeste", "Centro"]:
-        circuncripcion = input("Ingrese la circuncripcion: ")
+        circuncripcion = input("Ingrese la circuncripcion: ").capitalize()
     
-    nivel_socioeconomico = input("Ingrese el nivel socioeconomico (Bajo/Medio/Alto): ")
+    nivel_socioeconomico = input("Ingrese el nivel socioeconomico (Bajo/Medio/Alto): ").capitalize()
     while nivel_socioeconomico not in ["Bajo", "Medio", "Alto"]:
-        nivel_socioeconomico = input("Ingrese el nivel socioeconomico: ")
+        nivel_socioeconomico = input("Ingrese el nivel socioeconomico: ").capitalize()
         
-    
-    nivel_educativo = input("Ingrese el nivel educativo más alto alcanzado (Secundario/Universitario/Posgrado): ")
+    nivel_educativo = input("Ingrese el nivel educativo más alto alcanzado (Secundario/Universitario/Posgrado): ").capitalize()
     while nivel_educativo not in ["Secundario", "Universitario", "Posgrado"]: ##### PREGUNTAR SI PODRÍAMOS DEJAR QUE PONGA 'Primario' u 'Otro'
-        nivel_educativo = input("Ingrese el nivel educativo más alto alcanzado: ")
+        nivel_educativo = input("Ingrese el nivel educativo más alto alcanzado: ").capitalize()
     
-    afiliacion_politica = input("Ingrese la afilacion politica (Centro/Izquierda/Derecha): ")
+    afiliacion_politica = input("Ingrese la afilacion politica (Centro/Izquierda/Derecha): ").capitalize()
     while afiliacion_politica not in ["Centro", "Derecha", "Izquierda"]:
-        afiliacion_politica = input("Ingrese la afilacion politica (Centro/Izquierda/Derecha): ")
+        afiliacion_politica = input("Ingrese la afilacion politica (Centro/Izquierda/Derecha): ").capitalize()
         
-    interes_politica = int(input("Ingrse el interés político (rango 1-5): "))
-    while interes_politica not in [1, 2, 3, 4, 5]:
-        interes_politica = int(input("Ingrse el interés político (rango 1-5): "))
-    
-    preocupacion_economia = int(input("Ingrese la preocupación económica (rango 1-5): "))
-    while preocupacion_economia not in [1, 2, 3, 4, 5]:
-        preocupacion_economia = int(input("Ingrese la preocupación económica (rango 1-5): "))
-        
-    preocupacion_seguridad = int(input("Ingrese la preocupación de seguridad (rango 1-5): "))
-    while preocupacion_seguridad not in [1, 2, 3, 4, 5]:
-        preocupacion_seguridad = int(input("Ingrese la preocupación de seguridad (rango 1-5): "))
+    interes_politica = input("Ingrse el interés político (rango 1-5): ")
+    while not interes_politica.isnumeric() or int(interes_politica) not in [1, 2, 3, 4, 5] :
+       interes_politica = input("Ingrse el interés político (rango 1-5): ")
+   
+    preocupacion_economia = input("Ingrese la preocupación económica (rango 1-5): ")
+    while not preocupacion_economia.isnumeric() or int(preocupacion_economia) not in [1, 2, 3, 4, 5]:
+       preocupacion_economia = input("Ingrese la preocupación económica (rango 1-5): ")
+       
+    preocupacion_seguridad = input("Ingrese la preocupación de seguridad (rango 1-5): ")
+    while not preocupacion_seguridad.isnumeric() or int(preocupacion_seguridad) not in [1, 2, 3, 4, 5]:
+       preocupacion_seguridad = input("Ingrese la preocupación de seguridad (rango 1-5): ")
 
-    opinon_gobierno = int(input("Ingrese la opinión del gobierno actual (rango 1-5): "))
-    while opinon_gobierno not in [1, 2, 3, 4, 5]:
-        opinon_gobierno = int(input("Ingrese la opinión del gobierno actual (rango 1-5): "))
+    opinion_gobierno = input("Ingrese la opinión del gobierno actual (rango 1-5): ")
+    while not opinion_gobierno.isnumeric() or int(opinion_gobierno) not in [1, 2, 3, 4, 5]:
+       opinion_gobierno = input("Ingrese la opinión del gobierno actual (rango 1-5): ")
+   
+    percepcion_corrupcion = input("Ingrese la percepción de la corrupción (rango 1-5): ")
+    while not percepcion_corrupcion.isnumeric() or int(percepcion_corrupcion) not in [1, 2, 3, 4, 5]:
+       percepcion_corrupcion = input("Ingrese la percepcion de la corrupcion (rango 1-5): ")
     
+    intencion_voto = input("Ingrese qué partido piensa votar (Partido A/Partido B/Partido C): ").title() ## ALT: INGRESA SÓLO A/B/C y después lo modificamos para que no tenga errores o hacer un manejo de error
+    while intencion_voto not in ["Partido A", "Partido B", "Partido C", "Indeciso"]:
+        intencion_voto = input("Ingrese qué partido piensa votar (Partido A/Partido B/Partido C): ").title()
     
-    percepcion_corrupcion = int(input("Ingrese la percepción de la corrupción (rango 1-5): "))
-    while  percepcion_corrupcion not in [1, 2, 3, 4, 5]:
-        percepcion_corrupcion = int(input("Ingrese la percepcion de la corrupcion (rango 1-5): "))
-    
-    intencion_voto = input("Ingrese qué partido piensa votar (Partido A/Partido B/Partido C): ") ## ALT: INGRESA SÓLO A/B/C y después lo modificamos para que no tenga errores o hacer un manejo de error
-    while intencion_voto not in ["Partido A", "Partido B", "Partido C", "Indeciso"] :
-        intencion_voto = input("Ingrese qué partido piensa votar (Partido A/Partido B/Partido C): ")
-    
-    disposicion_cambiar = input("Ingrese si hay posibilidad de cambie su intención de voto (Sí/No): ")
+    disposicion_cambiar = input("Ingrese si hay posibilidad de cambie su intención de voto (Sí/No): ").capitalize()
     while disposicion_cambiar not in ["Sí", "No"] :
-        disposicion_cambiar = input("Ingrese si hay posibilidad de cambie su intención de voto (Sí/No): ")
+        disposicion_cambiar = input("Ingrese si hay posibilidad de cambie su intención de voto (Sí/No): ").capitalize()
     
-    participacion_previa_votacion = input("Ingrese si votó en las elecciones anteriores (Sí/No): ")
+    participacion_previa_votacion = input("Ingrese si votó en las elecciones anteriores (Sí/No): ").capitalize()
     while participacion_previa_votacion not in ["Sí", "No"]:
-        participacion_previa_votacion = input("Ingrese si votó en las elecciones anteriores (Sí/No): ")
+        participacion_previa_votacion = input("Ingrese si votó en las elecciones anteriores (Sí/No): ").capitalize()
         
 
-    valores = [ultimo_id, genero, edad, circuncripcion, nivel_socioeconomico, nivel_educativo, afiliacion_politica, interes_politica, preocupacion_economia, preocupacion_seguridad, opinon_gobierno, percepcion_corrupcion, intencion_voto, disposicion_cambiar, participacion_previa_votacion]
+    valores = [ultimo_id, genero, edad, circuncripcion, nivel_socioeconomico, nivel_educativo, afiliacion_politica, interes_politica, preocupacion_economia, preocupacion_seguridad, opinion_gobierno, percepcion_corrupcion, intencion_voto, disposicion_cambiar, participacion_previa_votacion]
     persona = Votante(* valores)
     
     participantes[ultimo_id] = persona

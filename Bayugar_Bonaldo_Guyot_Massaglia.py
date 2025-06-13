@@ -611,30 +611,18 @@ def graficar_barras(cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad
 ## 2. Gráfico de Torta - DOCUMENTAR MEJOR LO QUE HICIMOS
 
 def graficar_torta(partido_A, partido_B, partido_C) :
-    ''' REVISAR DOC
+    ''' 
     Genera un gráfico de torta con los resultados de voto para tres partidos y los votos indecisos. Luego lo muestra en 
     visualizacion de variables.
     
-
-    
-    partido_A : str
-        Nombre o identificador del Partido A, que se pasa a
-        `mostrar_resultados_elecciones` para obtener su recuento de votos.
-    partido_B : str
-        Nombre o identificador del Partido B, que se pasa a
-        `mostrar_resultados_elecciones` para obtener su recuento de votos.
-    partido_C : str
-        Nombre o identificador del Partido C, que se pasa a
-        `mostrar_resultados_elecciones` para obtener su recuento de votos.
-
     Parameters
     ----------
-    partido_A : int
-        
-    partido_B : int
-        
-    partido_C : int
-        
+    partido_A : objeto
+        Se usa para realizar el gráfico.
+    partido_B : objeto
+        Se usa para realizar el gráfico.
+    partido_C : objeto
+        Se usa para realizar el gráfico.
 
     '''
     # Llamamos a la función mostrar_resultados_elecciones y obtenemos los votos
@@ -746,7 +734,7 @@ def menu_2(archivo):
 
 
 def menu_3(participantes, df,partido_A,partido_B,partido_C ):
-    ''' FALTA EL VALUE ERROR EN EL DOC Y EN LA FUNCION
+    ''' 
     
     Muestra el menú que genera reportes gráficos e imprime datos de los resultados electorales. También predice
     el número de votantes.
@@ -767,7 +755,7 @@ def menu_3(participantes, df,partido_A,partido_B,partido_C ):
     Raises
     ------
     ValueError
-        
+        Si ingresa una opción no válida.
 
     Returns
     -------
@@ -795,7 +783,7 @@ def menu_3(participantes, df,partido_A,partido_B,partido_C ):
             else:
                 print("Esa opcion no es valida")
         except ValueError:
-            print("ingrese una de las opciones ofrecidad")
+            print("ingrese una de las opciones ofrecidas")
 
      
         

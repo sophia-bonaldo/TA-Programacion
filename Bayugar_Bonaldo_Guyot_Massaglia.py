@@ -397,7 +397,6 @@ def modificar_registro(df, participantes, archivo) :
     return participantes
 
 
-
 def mostrar_resultados_elecciones(partido_A, partido_B, partido_C):
     '''
     Muestra los resultados de las elecciones y printea el partido ganador. Esta funcion utiliza el metodo 'total_votantes' del 

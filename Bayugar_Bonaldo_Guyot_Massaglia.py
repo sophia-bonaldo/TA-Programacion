@@ -729,7 +729,8 @@ def menu_2(archivo):
             elif opcion == 3:
                 mostrar_resultados_elecciones(partido_A, partido_B, partido_C)
             elif opcion == 4:
-                clasificar_nivel_socioeconomico(partido_A, partido_B, partido_C, participantes)
+                cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad_B_bajo, cantidad_B_medio, cantidad_B_alto, cantidad_C_bajo, cantidad_C_medio, cantidad_C_alto = clasificar_nivel_socioeconomico(partido_A, partido_B, partido_C, participantes)
+                print(cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad_B_bajo, cantidad_B_medio, cantidad_B_alto, cantidad_C_bajo, cantidad_C_medio, cantidad_C_alto)
             elif opcion == 5:
                 menu(df)  # volver al menú principal
                 break

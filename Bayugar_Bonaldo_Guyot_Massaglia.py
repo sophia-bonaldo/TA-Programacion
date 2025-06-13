@@ -1,11 +1,18 @@
-#import os
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Jun 13 15:46:29 2025
+
+@author: msosa
+"""
+
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
 #configurar el working directory en la ruta del archivo
-#ruta = r"C:\Users\msosa\Documents\ayme\programacion"
-#os.chdir(ruta)
+ruta = r"C:\Users\msosa\Documents\ayme\programacion"
+os.chdir(ruta)
 
 #verificación de current working directory
 
@@ -141,6 +148,28 @@ def cargar_datos(archivo,partido_A,partido_B,partido_C):
     return dicc_personas, df
 
 def agregar_registro(participantes, partido_A, partido_B, partido_C):
+    '''
+    Crea una nueve instancia de la clase Votantes, los atributos de la instancia son dados por 
+    el usuario (se chequean que estan acorde a los requeridos). Luego esta instancia es
+    asignada a la instancia de Partido que pertenece(partido A, partido B o Partido C) en el 
+    atributo votantes de la clase Partido.
+
+    Parameters
+    ----------
+    participantes : diccionario
+        el diccionaro contiene las instancias de obajetos de Votantes como valoer y la clave es el id 
+    partido_A : objeto
+        Objeto de la clase 'Partido', es el 'Partido A'.
+    partido_B : objeto
+        Objeto de la clase 'Partido', es el 'Partido B'.
+    partido_C : objeto
+        Objeto de la clase 'Partido', es el 'Partico C'.
+
+    Returns
+    -------
+     .
+    '''
+    
     ultimo_id = max(participantes.keys()) + 1 #### COMENTARIO: EXPLICAR QUÉ HACE
     
     genero = input("Ingrese el género (Femenino/Masculino/Otro): ")
@@ -534,72 +563,90 @@ def graficar_torta(partido_A, partido_B, partido_C) :
 ### MENUS (FUNCIONES)
 
 def menu_2(archivo):
-    print("\nMENU 2: \n1 - Agregar registro, \n2 - Modificar registro, \n3 - Partido ganador, \n4 - Clasificacion segun nivel socioeconomico, \n5 - Volver a MENU 1")
-    opcion = int(input("Ingrese el número de la opción que desea elegir: "))
+   
     
     #Instancias de Objetos        
     partido_A = Partido("Partido A")
     partido_B = Partido("Partido B")
     partido_C = Partido("Partido C")
-    participantes, df = cargar_datos(archivo,partido_A,partido_B,partido_C) 
+    participantes, df = cargar_datos(archivo,partido_A,partido_B,partido_C)
     
-    while opcion != 5:
-        if opcion == 1:
-            agregar_registro(participantes, partido_A, partido_B, partido_C)
-            #llamo a??
-        
-        elif opcion == 2:
-            participantes = modificar_registro(df, participantes, archivo)
-            actualizar_datos(archivo, participantes)
-            #modificar datos funcion
-        
-        elif opcion == 3:
-            mostrar_resultados_elecciones(partido_A, partido_B, partido_C) # llamo a la funcion de que partido gana
-        
-        elif opcion == 4:
-            cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad_B_bajo, cantidad_B_medio, cantidad_B_alto, cantidad_C_bajo, cantidad_C_medio, cantidad_C_alto = clasificar_nivel_socioeconomico(partido_A, partido_B, partido_C, participantes)
-        
-        print("\nMENU 2: \n1 - Agregar registro, \n2 - Modificar registro, \n3 - Partido ganador, \n4 - Clasificacion segun nivel socioeconomico, \n5 - Volver a MENU 1")
-        opcion = int(input("Ingrese el número de la opción que desea elegir: "))
-        #else:
-         #   raise ValueError
+    while True:
+        print("\nMENU 2:")
+        print("1 - Agregar registro")
+        print("2 - Modificar registro")
+        print("3 - Mostrar partido ganador")
+        print("4 - Clasificación según nivel socioeconómico")
+        print("5 - Volver a MENU 1")
+
+        try:
+            opcion = int(input("Ingrese el número de la opción que desea elegir: "))
+            if opcion == 1:
+                agregar_registro(participantes, partido_A, partido_B, partido_C)
+            elif opcion == 2:
+                participantes = modificar_registro(df, participantes, archivo)
+                actualizar_datos(archivo, participantes)
+            elif opcion == 3:
+                mostrar_resultados_elecciones(partido_A, partido_B, partido_C)
+            elif opcion == 4:
+                clasificar_nivel_socioeconomico(partido_A, partido_B, partido_C, participantes)
+            elif opcion == 5:
+                menu(df)  # volver al menú principal
+                break
+            else:
+                print("Esa Opción no es válida.")
+        except ValueError:
+            print("ingrese una de las opciones ofrecidad")
     
-    if opcion == 5:
-        menu(df)
-   
+    
         
     
         # llamo a la funcion de clasificar nivel socio economico
 
 
 def menu_3(participantes, df,partido_A,partido_B,partido_C ):
-    print("\nMENU 3:  \n1 - Gráfico de barras, \n2 - Gráfico de torta, \n3 - Imprimir datos, \n4 - Volver a MENU 1")
-    opcion = int(input("Ingrese el número de la opción que desea elegir: "))
-    while opcion != 4:
-        if opcion == 1:
-            cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad_B_bajo, cantidad_B_medio, cantidad_B_alto, cantidad_C_bajo, cantidad_C_medio, cantidad_C_alto = clasificar_nivel_socioeconomico(partido_A, partido_B, partido_C, participantes)
-            graficar_barras(cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad_B_bajo, cantidad_B_medio, cantidad_B_alto, cantidad_C_bajo, cantidad_C_medio, cantidad_C_alto)
-        
-        elif opcion == 2:
-            mostrar_resultados_elecciones(partido_A, partido_B, partido_C)
-            graficar_torta(partido_A, partido_B, partido_C)
-            # funcion de la barra de torta
-            # los de el menu 2
-        
-        elif opcion == 3:
-            mostrar_resultados_elecciones(partido_A, partido_B, partido_C)
-            predecir_votantes_elecciones(df, umbral = 4.0)
-          #else:
-           #   raise ValueError 
-        
+    while True:
         print("\nMENU 3:  \n1 - Gráfico de barras, \n2 - Gráfico de torta, \n3 - Imprimir datos, \n4 - Volver a MENU 1")
-        opcion = int(input("Ingrese el número de la opción que desea elegir: "))
-    
-    if opcion == 4:
-        menu(df)
+        try:
+            opcion = int(input("Ingrese el número de la opción que desea elegir: "))
+            if opcion == 1:
+                cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad_B_bajo, cantidad_B_medio, cantidad_B_alto, cantidad_C_bajo, cantidad_C_medio, cantidad_C_alto = clasificar_nivel_socioeconomico(partido_A, partido_B, partido_C, participantes)
+                graficar_barras(cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad_B_bajo, cantidad_B_medio, cantidad_B_alto, cantidad_C_bajo, cantidad_C_medio, cantidad_C_alto)
+            elif opcion == 2:
+                mostrar_resultados_elecciones(partido_A, partido_B, partido_C)
+                graficar_torta(partido_A, partido_B, partido_C)
+                    # funcion de la barra de torta
+                    # los de el menu 2        
+            elif opcion == 3:
+                mostrar_resultados_elecciones(partido_A, partido_B, partido_C)
+                predecir_votantes_elecciones(df, umbral = 4.0)
+            elif opcion == 4:
+                menu(df)
+                break
+            else:
+                print("Esa opcion no es valida")
+        except ValueError:
+            print("ingrese una de las opciones ofrecidad")
+
      
         
 def validar_carga_datos(df,archivo):
+    '''
+    La funcion evalua si el df esta vacio
+
+    Parameters
+    ----------
+    df : dataframe
+        Devuelve el df con los datos de los votantes.
+    archivo : str
+        El archivo que contiene los datos 
+
+    Returns
+    -------
+    bool
+        
+    '''
+    
     if df.empty:
         return False
     
@@ -608,30 +655,39 @@ def validar_carga_datos(df,archivo):
 
 
 def menu(df):
-    print("\nMENU 1: \n1 - Modelar datos, \n2 - Analizar datos, \n3 - Fin")
-    opcion = int(input("Ingrese el número de la opción que desea elegir: "))
-    
-    if opcion == 1:
-        menu_2(archivo)
-    elif opcion == 2:
-        # Instancias de Objetos        
-            partido_A = Partido("Partido A")
-            partido_B = Partido("Partido B")
-            partido_C = Partido("Partido C")
-        
-            validacion = validar_carga_datos(df, archivo)
-            
-            if not validacion:
-                  participantes, df = cargar_datos(archivo, partido_A, partido_B, partido_C)
-            else:
-                participantes, _ = cargar_datos(archivo, partido_A, partido_B, partido_C)  # Volvés a cargar aunque ya esté validado
 
-            menu_3(participantes, df, partido_A, partido_B, partido_C)
+    
+    try:
+        print("\nMENU 1: \n1 - Modelar datos, \n2 - Analizar datos, \n3 - Fin")
+        opcion = int(input("Ingrese el número de la opción que desea elegir: "))
+        if opcion == 1:
+            menu_2(archivo)
+        elif opcion == 2:
+            # Instancias de Objetos        
+                partido_A = Partido("Partido A")
+                partido_B = Partido("Partido B")
+                partido_C = Partido("Partido C")
             
-    elif opcion == 3:
-            print("SE HA TERMINADO EL PROGRAMA.")
-    #else:
-     #   raise ValueError
+                validacion = validar_carga_datos(df, archivo)
+                
+                if not validacion:
+                      participantes, df = cargar_datos(archivo, partido_A, partido_B, partido_C)
+                else:
+                    participantes, _ = cargar_datos(archivo, partido_A, partido_B, partido_C)  # Volvés a cargar aunque ya esté validado
+
+                menu_3(participantes, df, partido_A, partido_B, partido_C)
+                
+        elif opcion == 3:
+                print("SE HA TERMINADO EL PROGRAMA.")
+        else:
+            print("Esa opcion no es valida")
+    except ValueError:
+        print("ingrese una de las opciones ofrecidad")
+        
+            
+    
+    
+    
 
 #Llamamos al MENU 1
 menu(df)

@@ -118,7 +118,82 @@ def cargar_datos(archivo,partido_A,partido_B,partido_C):
     
     return dicc_personas, df
 
+def agregar_registro(participantes, partido_A, partido_B, partido_C):
+    ultimo_id = max(participantes.keys()) + 1
+    
+    genero = input("ingrese el genero: ")
+    while genero not in ["Masculino", "Femenino", "Otro"]:
+        genero = input("ingrese el genero: ")
+        
+    edad = input("ingrese la edad")
+    while not edad.isalnum():
+        edad = input("ingrese la edad")
+        
 
+    circuncripcion = input("ingrese la circuncripcion: ")
+    while circuncripcion not in ["Norte", "Sur", "Este", "Oeste", "Centro"]:
+        circuncripcion = input("ingrese la circuncripcion: ")
+    
+    nivel_socioeconomico = input("ingrese el nivel socioeconomico: ")
+    while nivel_socioeconomico not in ["Bajo", "Medio", "Alto"]:
+        nivel_socioeconomico = input("ingrese el nivel socioeconomico: ")
+        
+    nivel_educativo = input("ingrese el nivel educativo: ")
+    while nivel_educativo not in ["Secundario", "Universitario", "Posgrado"]:
+        nivel_educativo = input("ingrese el nivel educativo: ")
+    
+    afiliacion_politica = input("ingrese la afilacion politica: ")
+    while afiliacion_politica not in ["Centro", "Derecha", "Izquierda"]:
+        afiliacion_politica = input("ingrese la afilacion politica: ")
+        
+    interes_politica = int(input("ingrse el interes politico en un rango de 1-5: "))
+    while interes_politica not in [1, 2, 3, 4, 5]:
+        interes_politica = input("ingrse el interes politico en un rango de 1-5: ")
+    
+    preocupacion_economia = int(input("ingrese la preocupacion economica en un rango del 1 al 5: "))
+    while preocupacion_economia not in [1, 2, 3, 4, 5]:
+        preocupacion_economia = input("ingrese la preocupacion economica en un rango del 1 al 5: ")
+        
+    preocupacion_seguridad = int(input("ingrese la preocupacion economica en un rango del 1 al 5: "))
+    while preocupacion_seguridad not in [1, 2, 3, 4, 5]:
+        preocupacion_seguridad = input("ingrese la preocupacion economica en un rango del 1 al 5: ")
+
+    opinon_gobierno = int(input("ingrese la opinion del gobierno actual en un rango del 1 al 5"))
+    while opinon_gobierno not in [1, 2, 3, 4, 5]:
+        opinon_gobierno = input("ingrese la opinion del gobierno actual en un rango del 1 al 5")
+    
+    
+    percepcion_corrupcion = int(input("ingrese la percepcion de la corrupcion en un rango del 1 al 5"))
+    while  percepcion_corrupcion not in [1, 2, 3, 4, 5]:
+        percepcion_corrupcion = input("ingrese la percepcion de la corrupcion en un rango del 1 al 5")
+    
+    intencion_voto = input("que partido piensa votar")
+    while intencion_voto not in ["Partido A ", "Partido B", "Partido C", "Indeciso"]:
+        intencion_voto = input("que partido piensa votar")
+    
+    disposicion_cambiar = input("ingrese si hay posibilidad de cambiar su intencion de voto")
+    while disposicion_cambiar not in ["Sí", "No"]:
+        disposicion_cambiar = input("ingrese si hay posibilidad de cambiar su intencion de voto")
+    
+    participacion_previa_votacion = input("ingres si voto en las elecciones anteriores")
+    while participacion_previa_votacion not in ["Sí", "No"]:
+        participacion_previa_votacion = input("ingres si voto en las elecciones anteriores")
+        
+
+    valores = [ultimo_id, genero, edad, circuncripcion, nivel_socioeconomico, nivel_educativo, afiliacion_politica, interes_politica, preocupacion_economia, preocupacion_seguridad, opinon_gobierno, percepcion_corrupcion, intencion_voto, disposicion_cambiar, participacion_previa_votacion]
+    persona = Votante(* valores)
+    print(persona)
+    participantes[ultimo_id] = persona
+    
+    if persona.intencion_voto == "Partido A":
+        partido_A.agregar_votantes(ultimo_id + 1)
+    elif persona.intencion_voto == "Partido B":
+        partido_B.agregar_votantes(ultimo_id)
+    
+    elif persona.intencion_voto == "Partido C":
+        partido_C.agregar_votantes(ultimo_id)
+     
+    
 def actualizar_datos(archivo, participantes):
     try:
         filas = []
@@ -353,7 +428,7 @@ def menu_2(archivo):
     participantes, df = cargar_datos(archivo,partido_A,partido_B,partido_C) 
     while opcion != 5:
         if opcion == 1:
-            print("no se que poner")
+            agregar_registro(participantes, partido_A, partido_B, partido_C)
             #llamo a??
         elif opcion == 2:
             participantes = modificar_registro(df, participantes, archivo)

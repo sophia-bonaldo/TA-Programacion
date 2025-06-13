@@ -144,28 +144,38 @@ def cargar_datos(archivo, partido_A, partido_B, partido_C):
 
 def agregar_registro(participantes, partido_A, partido_B, partido_C):
     '''
-    Crea una nueve instancia de la clase Votantes, los atributos de la instancia son dados por 
-    el usuario (se chequean que estan acorde a los requeridos). Luego esta instancia es
-    asignada a la instancia de Partido que pertenece(partido A, partido B o Partido C) en el 
-    atributo votantes de la clase Partido.
+    Agrega un nuevo votante al sistema.
+
+    Esta función pide al usuario que ingrese los datos correspondientes a 
+    un nuevo votante y valida a cada campo. 
+    
+    Luego:
+    
+    - Crea una instancia de la clase Votante.
+    - La asigna al diccionario de participantes.
+    - Asocia al votante con el partido correspondiente.
+    - Actualiza el archivo .csv con el nuevo registro.
+    - Recarga el archivo actualizado en un nuevo DataFrame y lo devuelve.
 
     Parameters
     ----------
-    participantes : diccionario
-        el diccionaro contiene las instancias de obajetos de Votantes como valoer y la clave es el id 
+    participantes : dict
+        Diccionario que contiene las instancias de objetos de tipo Votante,
+        donde la clave es el ID del votante y el valor es el objeto 'Votant'e.
     
-    partido_A : objeto
-        Objeto de la clase 'Partido', es el 'Partido A'.
+    partido_A : Partido
+        Objeto correspondiente al Partido A.
     
-    partido_B : objeto
-        Objeto de la clase 'Partido', es el 'Partido B'.
+    partido_B : Partido
+        Objeto correspondiente al Partido B.
     
-    partido_C : objeto
-        Objeto de la clase 'Partido', es el 'Partico C'.
+    partido_C : Partido
+        Objeto correspondiente al Partido C.
 
     Returns
     -------
-     None
+    df_actualizado : DataFrame
+        DataFrame con los datos actualizados, incluyendo el nuevo votante agregado.
     '''
     
     ultimo_id = max(participantes.keys()) + 1 #### COMENTARIO: EXPLICAR QUÉ HACE
@@ -244,7 +254,10 @@ def agregar_registro(participantes, partido_A, partido_B, partido_C):
     elif persona.intencion_voto == "Partido C":
         partido_C.agregar_votantes(ultimo_id)
      
+    actualizar_datos(archivo, participantes)
     
+    df_actualizado = pd.read_csv(archivo)
+    return df_actualizado
 
 def actualizar_datos(archivo, participantes) :
     '''
@@ -857,10 +870,6 @@ def menu(df):
     
     except ValueError:
         print("ingrese una de las opciones ofrecidad")
-        
-            
-    
-    
     
 
 #Llamamos al MENU 1

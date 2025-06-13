@@ -10,7 +10,7 @@ import numpy as np
 #verificación de current working directory
 
 #Luego, para trabajar con el archivo se utiliza solamente el nombre
-archivo = "Decision_Voto_Elecciones.csv"
+archivo = "Decision_Voto_Elecciones (1).csv"
 
 #cargar BD
 df = pd.read_csv(archivo)
@@ -21,11 +21,11 @@ df = pd.read_csv(archivo)
 
 ## Clases y Objetos
 class Votante :
-    def __init__(self, id_votante, genero, edad, circunscripcion, nivel_socioeconomico, nivel_educativo, afiliacion_politica, interes_politica, preocupacion_economica, preocupacion_seguridad, opinion_gobierno_actual, percepcion_corrupcion, intencion_voto, dispocision_cambiar_voto, participacion_voto_anterior) :
+    def __init__(self, id_votante, edad, genero, circunscripcion, nivel_socioeconomico, nivel_educativo, afiliacion_politica, interes_politica, preocupacion_economica, preocupacion_seguridad, opinion_gobierno_actual, percepcion_corrupcion, intencion_voto, dispocision_cambiar_voto, participacion_voto_anterior) :
         #Genérico
         self.id_votante = id_votante
-        self.genero = genero
         self.edad = edad
+        self.genero = genero
         
         #Situación individual
         self.circunscripcion = circunscripcion
@@ -170,14 +170,15 @@ def agregar_registro(participantes, partido_A, partido_B, partido_C):
     
     ultimo_id = max(participantes.keys()) + 1 #### COMENTARIO: EXPLICAR QUÉ HACE
     
-    genero = input("Ingrese el género (Femenino/Masculino/Otro): ").capitalize()
-    while genero not in ["Masculino", "Femenino", "Otro"]:
-        genero = input("Ingrese el género (Femenino/Masculino/Otro): ").capitalize()
-    
     edad = input("Ingrese la edad: ")
     while not edad.isdigit() or int(edad) <= 0:
         edad = input("Ingrese una edad válida: ")
         
+    genero = input("Ingrese el género (Femenino/Masculino/Otro): ").capitalize()
+    while genero not in ["Masculino", "Femenino", "Otro"]:
+        genero = input("Ingrese el género (Femenino/Masculino/Otro): ").capitalize()
+    
+     
     print('Circunscripción electoral a la que pertenece el votante (Norte/Sur/Este/Oeste/Centro).')
     circuncripcion = input("Ingrese la circuncripcion: ").capitalize()
     
@@ -229,7 +230,7 @@ def agregar_registro(participantes, partido_A, partido_B, partido_C):
         participacion_previa_votacion = input("Ingrese si votó en las elecciones anteriores (Sí/No): ").capitalize()
         
 
-    valores = [ultimo_id, genero, edad, circuncripcion, nivel_socioeconomico, nivel_educativo, afiliacion_politica, interes_politica, preocupacion_economia, preocupacion_seguridad, opinion_gobierno, percepcion_corrupcion, intencion_voto, disposicion_cambiar, participacion_previa_votacion]
+    valores = [ultimo_id, edad, genero, circuncripcion, nivel_socioeconomico, nivel_educativo, afiliacion_politica, interes_politica, preocupacion_economia, preocupacion_seguridad, opinion_gobierno, percepcion_corrupcion, intencion_voto, disposicion_cambiar, participacion_previa_votacion]
     persona = Votante(* valores)
     
     participantes[ultimo_id] = persona
@@ -281,8 +282,8 @@ def actualizar_datos(archivo, participantes) :
             
             fila = {
                 'ID_Votante': votante.id_votante,
-                'Genero': votante.genero,
                 'Edad': votante.edad,
+                'Genero': votante.genero,
                 
                 'Circunscripcion': votante.circunscripcion,
                 'Nivel_Socioeconomico': votante.nivel_socioeconomico,
@@ -385,7 +386,7 @@ def modificar_registro(df, participantes, archivo) :
     fila = df.loc[indice_fila]
     
     participantes[id_modificar] = Votante(
-        fila['ID_Votante'], fila['Genero'], fila['Edad'], 
+        fila['ID_Votante'], fila['Edad'], fila['Genero'], 
         fila['Circunscripcion'], fila['Nivel_Socioeconomico'], 
         fila['Nivel_Educativo'], fila['Afiliacion_Politica'],
         fila['Interes_Politica'], fila['Preocupacion_Economia'], 
@@ -395,6 +396,7 @@ def modificar_registro(df, participantes, archivo) :
     )
     
     return participantes
+
 
 
 def mostrar_resultados_elecciones(partido_A, partido_B, partido_C):
@@ -852,9 +854,13 @@ def menu(df):
                 print("SE HA TERMINADO EL PROGRAMA.")
         else:
             print("Esa opcion no es valida")
+    
     except ValueError:
         print("ingrese una de las opciones ofrecidad")
         
+            
+    
+    
     
 
 #Llamamos al MENU 1

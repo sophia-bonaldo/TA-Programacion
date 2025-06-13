@@ -423,7 +423,9 @@ def modificar_registro(df, participantes, archivo) :
             continue
         
         nuevo_valor = input(f"Nuevo valor para {campo}: ")
-        df.at[indice_fila, campo] = nuevo_valor #### ----------> AGREGAR QUÉ ES .at[]
+        
+        #df.at[etiqueta_fila, columna]
+        df.at[indice_fila, campo] = nuevo_valor #.at[] -> acceder o modificar un valor individual en un DataFrame, usando etiquetas
 
     df.to_csv(archivo, index = False)
     
@@ -482,13 +484,12 @@ def mostrar_resultados_elecciones(partido_A, partido_B, partido_C):
     return votos_A, votos_B, votos_C
 
 
-def clasificar_nivel_socioeconomico(partido_A, partido_B, partido_C, diccionario) : #CAMBIAR NOMBRE FUNCION 
+def clasificar_nivel_socioeconomico(partido_A, partido_B, partido_C, diccionario) :
     '''
     Clasifica a los votantes de cada partido según su nivel socioeconómico (bajo, medio, alto) y devuelve la cantidad de votantes en cada nivel.
     Utiliza el método 'clasificar_votantes()' de los objetos 'Partido' para la clasificacion de los votantes en cada nivel socioeconomico
     Tambien, calcula la cantidad de votantes en cada nivel para los tres partidos y devuelve estos valores.
-    
-           
+          
     Parameters
     ----------
     partido_A : objeto

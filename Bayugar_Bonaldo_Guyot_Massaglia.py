@@ -3,11 +3,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-#Configura el working directory en la ruta del archivo
+#configurar el working directory en la ruta del archivo
 #ruta = r"C:\Users\msosa\Documents\ayme\programacion"
 #os.chdir(ruta)
 
-#Verificación de current working directory
+#verificación de current working directory
 
 #Luego, para trabajar con el archivo se utiliza solamente el nombre
 archivo = "Decision_Voto_Elecciones.csv"
@@ -16,6 +16,7 @@ archivo = "Decision_Voto_Elecciones.csv"
 df = pd.read_csv(archivo)
 
 #______________________________________________________________________________
+
 # i. MODELADO DE DATOS
 
 ## Clases y Objetos
@@ -48,37 +49,41 @@ class Votante :
         self.participacion_voto_anterior = participacion_voto_anterior
         
         
+        #MÉTODOS
+        ...
+        
+        
 class Partido :
     def __init__(self, afiliacion_politica) :
         self.afiliacion_politica = afiliacion_politica
-        self.lista_votantes = []#lista con los votantes afiliados a un partido
+        self.lista_votantes = [] # lista con los votantes afiliados a un partido
       
         #METODOS  
-    def agregar_votantes(self,votante):
+    def agregar_votantes(self, votante) :
         self.lista_votantes.append(votante)
-    
-    def clasificar_votantes(self, dicc_personas):
+        
+
+    def clasificar_votantes(self, dicc_personas) :
         clase_baja = []
         clase_media = []
         clase_alta = []
     
-        for votante_id in self.lista_votantes:
+        for votante_id in self.lista_votantes :
             votante = dicc_personas[votante_id]
             clase = votante.nivel_socioeconomico
-            if clase == "Bajo":
+            if clase == "Bajo" :
                 clase_baja.append(votante_id)
-            elif clase == "Medio":
+            elif clase == "Medio" :
                 clase_media.append(votante_id)
-            elif clase == "Alto":
+            elif clase == "Alto" :
                 clase_alta.append(votante_id)
     
         return clase_baja, clase_media, clase_alta
     
-    def total_votantes(self):
+    def total_votantes(self) :
         return len(self.lista_votantes)
 
-#______________________________________________________________________________
-### FUNCIONES
+## FUNCIONES
 
 def cargar_datos(archivo,partido_A,partido_B,partido_C):
     df = pd.read_csv(archivo)
@@ -89,7 +94,6 @@ def cargar_datos(archivo,partido_A,partido_B,partido_C):
     identificador = 1
     for i, fila in df.iterrows():
         valores = []
-        
         for col in columnas :
             valor = fila[col]  # obtenemos el valor que corresponde a la columna actual
             valores.append(valor)  # lo agregamos a la lista de valores
@@ -102,7 +106,6 @@ def cargar_datos(archivo,partido_A,partido_B,partido_C):
         
         if persona.intencion_voto == "Partido A":
             partido_A.agregar_votantes(nombre)
-        
         elif persona.intencion_voto == "Partido B":
             partido_B.agregar_votantes(nombre)
         
@@ -111,18 +114,16 @@ def cargar_datos(archivo,partido_A,partido_B,partido_C):
     
     return dicc_personas, df
 
-
 def agregar_registro(participantes, partido_A, partido_B, partido_C):
-    ultimo_id = max(participantes.keys()) + 1
+    ultimo_id = max(participantes.keys()) + 1 #### COMENTARIO: EXPLICAR QUÉ HACE
     
     genero = input("Ingrese el género (Femenino/Masculino/Otro): ")
     while genero not in ["Masculino", "Femenino", "Otro"]:
         genero = input("Ingrese el género (Femenino/Masculino/Otro): ")
-        
-    edad = input("Ingrese la edad: ")
     
-    while not edad.isalnum(): ####COMENTARIO: Verificar que sea un valor positivo y entero
-        edad = input("Ingrese la edad: ")
+    edad = input("Ingrese la edad: ")
+    while not edad.isdigit() or int(edad) <= 0:
+        edad = input("Ingrese una edad válida: ")
         
     print('Circunscripción electoral a la que pertenece el votante (Norte/Sur/Este/Oeste/Centro).')
     circuncripcion = input("Ingrese la circuncripcion: ")
@@ -133,7 +134,8 @@ def agregar_registro(participantes, partido_A, partido_B, partido_C):
     nivel_socioeconomico = input("Ingrese el nivel socioeconomico (Bajo/Medio/Alto): ")
     while nivel_socioeconomico not in ["Bajo", "Medio", "Alto"]:
         nivel_socioeconomico = input("Ingrese el nivel socioeconomico: ")
-            
+        
+    
     nivel_educativo = input("Ingrese el nivel educativo más alto alcanzado: ")
     while nivel_educativo not in ["Secundario", "Universitario", "Posgrado"]: ##### PREGUNTAR SI PODRÍAMOS DEJAR QUE PONGA 'Primario' u 'Otro'
         nivel_educativo = input("Ingrese el nivel educativo más alto alcanzado: ")
@@ -158,17 +160,18 @@ def agregar_registro(participantes, partido_A, partido_B, partido_C):
     while opinon_gobierno not in [1, 2, 3, 4, 5]:
         opinon_gobierno = int(input("Ingrese la opinión del gobierno actual (rango 1-5): "))
     
+    
     percepcion_corrupcion = int(input("Ingrese la percepción de la corrupción (rango 1-5): "))
     while  percepcion_corrupcion not in [1, 2, 3, 4, 5]:
         percepcion_corrupcion = int(input("Ingrese la percepcion de la corrupcion (rango 1-5): "))
     
     intencion_voto = input("Ingrese qué partido piensa votar (Partido A/Partido B/Partido C): ") ## ALT: INGRESA SÓLO A/B/C y después lo modificamos para que no tenga errores o hacer un manejo de error
-    while intencion_voto not in ["Partido A", "Partido B", "Partido C", "Indeciso"]:
+    while intencion_voto not in ["Partido A", "Partido B", "Partido C", "Indeciso"] :
         intencion_voto = input("Ingrese qué partido piensa votar (Partido A/Partido B/Partido C): ")
     
-    disposicion_cambiar = input("Ingrese si hay posibilidad de cambie su intención de voto (Sí/No):")
-    while disposicion_cambiar not in ["Sí", "No"]:
-        disposicion_cambiar = input("Ingrese si hay posibilidad de cambie su intención de voto (Sí/No):")
+    disposicion_cambiar = input("Ingrese si hay posibilidad de cambie su intención de voto (Sí/No): ")
+    while disposicion_cambiar not in ["Sí", "No"] :
+        disposicion_cambiar = input("Ingrese si hay posibilidad de cambie su intención de voto (Sí/No): ")
     
     participacion_previa_votacion = input("Ingrese si votó en las elecciones anteriores (Sí/No): ")
     while participacion_previa_votacion not in ["Sí", "No"]:
@@ -177,7 +180,7 @@ def agregar_registro(participantes, partido_A, partido_B, partido_C):
 
     valores = [ultimo_id, genero, edad, circuncripcion, nivel_socioeconomico, nivel_educativo, afiliacion_politica, interes_politica, preocupacion_economia, preocupacion_seguridad, opinon_gobierno, percepcion_corrupcion, intencion_voto, disposicion_cambiar, participacion_previa_votacion]
     persona = Votante(* valores)
-    print(persona)
+    print(persona) ######## COMENTARIO: MODIFICAR
     
     participantes[ultimo_id] = persona
     
@@ -214,7 +217,7 @@ def actualizar_datos(archivo, participantes):
                 'Afiliacion_Politica': votante.afiliacion_politica,
                 'Interes_Politica': votante.interes_politica,
                 
-                'Preocupacion_Economia': votante.preocupacion_economia,
+                'Preocupacion_Economia': votante.preocupacion_economica,
                 'Preocupacion_Seguridad': votante.preocupacion_seguridad,
                 
                 'Opinion_Gobierno_Actual': votante.opinion_gobierno_actual,
@@ -264,7 +267,7 @@ def modificar_registro(df, participantes, archivo) :
     while True :
         campo = input("Ingrese el campo a modificar (o 'fin' para terminar): ")
         
-        if campo.lower() == 'fin': #VERIFICAR PORQUE DA ERROR SI UNO NO LO PONE TODO EN MINÚSCULA
+        if campo.lower() == 'fin': #### COMENTARIO: VERIFICAR PORQUE DA ERROR SI UNO NO LO PONE TODO EN MINÚSCULA
             break
         
         if campo not in columnas:
@@ -298,20 +301,17 @@ def mostrar_resultados_elecciones(partido_A, partido_B, partido_C):
     
     if votos_A > votos_B and votos_A > votos_C:
         print(f"Partido A ganó con {votos_A} votos.")
-    
     elif votos_B > votos_A and votos_B > votos_C:
         print(f"Partido B ganó con {votos_B} votos.")
-    
     elif votos_C > votos_A and votos_C > votos_B:
         print(f"Partido C ganó con {votos_C} votos.")
-    
     else:
         print("Empate")
     
     return votos_A, votos_B, votos_C
 
 
-def clasificar_nivel_socioeconomico(partido_A, partido_B, partido_C, diccionario) : ##### CAMBIAR NOMBRE FUNCION 
+def clasificar_nivel_socioeconomico(partido_A, partido_B, partido_C, diccionario) : #CAMBIAR NOMBRE FUNCION 
     A_bajo, A_medio, A_alta = partido_A.clasificar_votantes(diccionario)
     B_bajo, B_medio, B_alta = partido_B.clasificar_votantes(diccionario)
     C_bajo, C_medio, C_alta = partido_C.clasificar_votantes(diccionario)
@@ -381,6 +381,7 @@ def graficar_barras(cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad
 
 
 ## 2. Gráfico de Torta - DOCUMENTAR MEJOR LO QUE HICIMOS
+
 def graficar_torta(partido_A, partido_B, partido_C) :
     # Llamamos a la función mostrar_resultados_elecciones y obtenemos los votos
     votos_A, votos_B, votos_C = mostrar_resultados_elecciones(partido_A, partido_B, partido_C)
@@ -463,7 +464,6 @@ def menu_2(archivo):
 def menu_3(participantes, df,partido_A,partido_B,partido_C ):
     print("\nMENU 3:  \n1 - Gráfico de barras, \n2 - Gráfico de torta, \n3 - Imprimir datos, \n4 - Volver a MENU 1")
     opcion = int(input("Ingrese el número de la opción que desea elegir: "))
-    
     while opcion != 4:
         if opcion == 1:
             cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad_B_bajo, cantidad_B_medio, cantidad_B_alto, cantidad_C_bajo, cantidad_C_medio, cantidad_C_alto = clasificar_nivel_socioeconomico(partido_A, partido_B, partido_C, participantes)

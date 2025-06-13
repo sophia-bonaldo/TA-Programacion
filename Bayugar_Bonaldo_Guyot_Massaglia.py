@@ -488,7 +488,32 @@ def predecir_votantes_elecciones(df, umbral = 4.0) :
 
 ## 1. Gráfico de Barras
 def graficar_barras(cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad_B_bajo, cantidad_B_medio, cantidad_B_alto, cantidad_C_bajo, cantidad_C_medio, cantidad_C_alto):
-   
+    '''
+    Grafica un diagrama de barras comparando los niveles socioeconómicos (bajo, medio y alto) para tres partidos (A, B y C).
+    Muestra el gráfico en la parte de visualización de variables.
+
+    Parameters
+    ----------
+    cantidad_A_bajo : int
+        Cantidad de votantes de nivel socioeconómico bajo en el Partido A.
+    cantidad_A_medio : int
+        Cantidad de votantes de nivel socioeconómico medio en el Partido A.
+    cantidad_A_alto : int
+        Cantidad de votantes de nivel socioeconómico alto en el Partido A.
+    cantidad_B_bajo : int
+        Cantidad de votantes de nivel socioeconómico bajo en el Partido B.
+    cantidad_B_medio : int
+        Cantidad de votantes de nivel socioeconómico medio en el Partido B.
+    cantidad_B_alto : int
+        Cantidad de votantes de nivel socioeconómico alto en el Partido B.
+    cantidad_C_bajo : int
+        Cantidad de votantes de nivel socioeconómico bajo en el Partido C.
+    cantidad_C_medio : int
+        Cantidad de votantes de nivel socioeconómico medio en el Partido C.
+    cantidad_C_alto : int
+        Cantidad de votantes de nivel socioeconómico alto en el Partido C.
+
+   '''
     # Datos utilizados (reemplazá estos con los valores reales obtenidos de la función)
     partidos = ("Partido A", "Partido B", "Partido C")
     nivel_socioeconomico = {
@@ -523,6 +548,32 @@ def graficar_barras(cantidad_A_bajo, cantidad_A_medio, cantidad_A_alto, cantidad
 ## 2. Gráfico de Torta - DOCUMENTAR MEJOR LO QUE HICIMOS
 
 def graficar_torta(partido_A, partido_B, partido_C) :
+    ''' REVISAR DOC
+    Genera un gráfico de torta con los resultados de voto para tres partidos y los votos indecisos. Luego lo muestra en 
+    visualizacion de variables.
+    
+
+    
+    partido_A : str
+        Nombre o identificador del Partido A, que se pasa a
+        `mostrar_resultados_elecciones` para obtener su recuento de votos.
+    partido_B : str
+        Nombre o identificador del Partido B, que se pasa a
+        `mostrar_resultados_elecciones` para obtener su recuento de votos.
+    partido_C : str
+        Nombre o identificador del Partido C, que se pasa a
+        `mostrar_resultados_elecciones` para obtener su recuento de votos.
+
+    Parameters
+    ----------
+    partido_A : int
+        
+    partido_B : int
+        
+    partido_C : int
+        
+
+    '''
     # Llamamos a la función mostrar_resultados_elecciones y obtenemos los votos
     votos_A, votos_B, votos_C = mostrar_resultados_elecciones(partido_A, partido_B, partido_C)
     
@@ -563,7 +614,33 @@ def graficar_torta(partido_A, partido_B, partido_C) :
 ### MENUS (FUNCIONES)
 
 def menu_2(archivo):
-   
+    '''
+    Ejecuta el ciclo del submenú de modelar datos.
+
+    Este menú permite al usuario:
+      1. Agregar registro de voto.
+      2. Modificar un registro existente.
+      3. Mostrar el partido ganador de las elecciones.
+      4. Clasificar a los votantes según su nivel socioeconómico.
+      5. Volver al MENU 1.
+
+    
+    Parameters
+    ----------
+    archivo : str
+        Ruta del archivo para acceder a la informacion
+
+    Raises
+    ------
+    ValueError
+        Si el usuario ingresa una opción que no puede convertirse a entero o que no corresponde a 
+        ninguna de las opciones disponibles (1–5).
+
+    Returns
+    -------
+    None.
+
+    '''
     
     #Instancias de Objetos        
     partido_A = Partido("Partido A")
@@ -605,6 +682,34 @@ def menu_2(archivo):
 
 
 def menu_3(participantes, df,partido_A,partido_B,partido_C ):
+    ''' FALTA EL VALUE ERROR EN EL DOC Y EN LA FUNCION
+    
+    Muestra el menú que genera reportes gráficos e imprime datos de los resultados electorales. También predice
+    el número de votantes.
+
+    Parameters
+    ----------
+    participantes : list
+        Lista con información del nivel socioeconómico y participación previa.
+    df : dataframe
+        DataFrame con los datos de los votantes para realizar la predicción.
+    partido_A : objeto
+        Contiene los resultados y datos del Partido A.
+    partido_B : objeto
+        Contiene los resultados y datos del Partido A.
+    partido_C : objeto
+        Contiene los resultados y datos del Partido A.
+
+    Raises
+    ------
+    ValueError
+        
+
+    Returns
+    -------
+    None.
+
+    '''
     while True:
         print("\nMENU 3:  \n1 - Gráfico de barras, \n2 - Gráfico de torta, \n3 - Imprimir datos, \n4 - Volver a MENU 1")
         try:
@@ -655,7 +760,25 @@ def validar_carga_datos(df,archivo):
 
 
 def menu(df):
+    '''
+    Muestra el menú principal para modelar o analizar datos electorales.Se usa el DataFrame para validar y
+    cargar la información antes de pasar a los submenús.
 
+    Parameters
+    ----------
+    df : dataframe
+        DataFrame con la información de los votantes.
+        
+    Raises
+    ------
+    ValueError
+        Si se ingresa una opción fuera del rango válido (1, 2 o 3).
+
+    Returns
+    -------
+    None.
+
+    '''
     
     try:
         print("\nMENU 1: \n1 - Modelar datos, \n2 - Analizar datos, \n3 - Fin")

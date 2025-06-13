@@ -56,10 +56,6 @@ class Votante :
         self.participacion_voto_anterior = participacion_voto_anterior
         
         
-        #MÉTODOS
-        ...
-        
-        
 class Partido :
     def __init__(self, afiliacion_politica) :
         self.afiliacion_politica = afiliacion_politica
@@ -96,9 +92,8 @@ def cargar_datos(archivo,partido_A,partido_B,partido_C):
     '''
     Clasifica a los votantes en tres partidos políticos.Lee un archivo CSV y los clasifica en tres 
     partidos políticos sacando los datos de la columna 'Intencion_Voto'. Se agregan a los votantes a 
-    sus respectivos partidos mediante los métodos de la clase 'Partido'. Devuelve un diccionario con los objetos y un dataframe
-    con los datos de los votantes.
-
+    sus respectivos partidos mediante los métodos de la clase 'Partido'. 
+    Devuelve un diccionario con los objetos y un dataframe con los datos de los votantes.
 
     Parameters
     ----------
@@ -116,7 +111,8 @@ def cargar_datos(archivo,partido_A,partido_B,partido_C):
     dicc_personas : dict
         Devuelve un diccionario con los objetos, la clave es un identificador unico (numero del 1 al ultimo)
         y el valor es el objeto 'Votante'.
-    df : dataframe
+    
+    df : dataFrame
         Devuelve el df con los datos de los votantes.
     '''
     df = pd.read_csv(archivo)
@@ -158,16 +154,19 @@ def agregar_registro(participantes, partido_A, partido_B, partido_C):
     ----------
     participantes : diccionario
         el diccionaro contiene las instancias de obajetos de Votantes como valoer y la clave es el id 
+    
     partido_A : objeto
         Objeto de la clase 'Partido', es el 'Partido A'.
+    
     partido_B : objeto
         Objeto de la clase 'Partido', es el 'Partido B'.
+    
     partido_C : objeto
         Objeto de la clase 'Partido', es el 'Partico C'.
 
     Returns
     -------
-     .
+     None
     '''
     
     ultimo_id = max(participantes.keys()) + 1 #### COMENTARIO: EXPLICAR QUÉ HACE
@@ -183,19 +182,19 @@ def agregar_registro(participantes, partido_A, partido_B, partido_C):
     print('Circunscripción electoral a la que pertenece el votante (Norte/Sur/Este/Oeste/Centro).')
     circuncripcion = input("Ingrese la circuncripcion: ").capitalize()
     
-    while circuncripcion not in ["Norte", "Sur", "Este", "Oeste", "Centro"]:
+    while circuncripcion not in ["Norte", "Sur", "Este", "Oeste", "Centro"] :
         circuncripcion = input("Ingrese la circuncripcion: ").capitalize()
     
     nivel_socioeconomico = input("Ingrese el nivel socioeconomico (Bajo/Medio/Alto): ").capitalize()
-    while nivel_socioeconomico not in ["Bajo", "Medio", "Alto"]:
+    while nivel_socioeconomico not in ["Bajo", "Medio", "Alto"] :
         nivel_socioeconomico = input("Ingrese el nivel socioeconomico: ").capitalize()
         
     nivel_educativo = input("Ingrese el nivel educativo más alto alcanzado (Secundario/Universitario/Posgrado): ").capitalize()
-    while nivel_educativo not in ["Secundario", "Universitario", "Posgrado"]: ##### PREGUNTAR SI PODRÍAMOS DEJAR QUE PONGA 'Primario' u 'Otro'
+    while nivel_educativo not in ["Secundario", "Universitario", "Posgrado"] :
         nivel_educativo = input("Ingrese el nivel educativo más alto alcanzado: ").capitalize()
     
     afiliacion_politica = input("Ingrese la afilacion politica (Centro/Izquierda/Derecha): ").capitalize()
-    while afiliacion_politica not in ["Centro", "Derecha", "Izquierda"]:
+    while afiliacion_politica not in ["Centro", "Derecha", "Izquierda"] :
         afiliacion_politica = input("Ingrese la afilacion politica (Centro/Izquierda/Derecha): ").capitalize()
         
     interes_politica = input("Ingrse el interés político (rango 1-5): ")
@@ -203,23 +202,23 @@ def agregar_registro(participantes, partido_A, partido_B, partido_C):
        interes_politica = input("Ingrse el interés político (rango 1-5): ")
    
     preocupacion_economia = input("Ingrese la preocupación económica (rango 1-5): ")
-    while not preocupacion_economia.isnumeric() or int(preocupacion_economia) not in [1, 2, 3, 4, 5]:
+    while not preocupacion_economia.isnumeric() or int(preocupacion_economia) not in [1, 2, 3, 4, 5] :
        preocupacion_economia = input("Ingrese la preocupación económica (rango 1-5): ")
        
     preocupacion_seguridad = input("Ingrese la preocupación de seguridad (rango 1-5): ")
-    while not preocupacion_seguridad.isnumeric() or int(preocupacion_seguridad) not in [1, 2, 3, 4, 5]:
+    while not preocupacion_seguridad.isnumeric() or int(preocupacion_seguridad) not in [1, 2, 3, 4, 5] :
        preocupacion_seguridad = input("Ingrese la preocupación de seguridad (rango 1-5): ")
 
     opinion_gobierno = input("Ingrese la opinión del gobierno actual (rango 1-5): ")
-    while not opinion_gobierno.isnumeric() or int(opinion_gobierno) not in [1, 2, 3, 4, 5]:
+    while not opinion_gobierno.isnumeric() or int(opinion_gobierno) not in [1, 2, 3, 4, 5] :
        opinion_gobierno = input("Ingrese la opinión del gobierno actual (rango 1-5): ")
    
     percepcion_corrupcion = input("Ingrese la percepción de la corrupción (rango 1-5): ")
-    while not percepcion_corrupcion.isnumeric() or int(percepcion_corrupcion) not in [1, 2, 3, 4, 5]:
+    while not percepcion_corrupcion.isnumeric() or int(percepcion_corrupcion) not in [1, 2, 3, 4, 5] :
        percepcion_corrupcion = input("Ingrese la percepcion de la corrupcion (rango 1-5): ")
     
     intencion_voto = input("Ingrese qué partido piensa votar (Partido A/Partido B/Partido C): ").title() ## ALT: INGRESA SÓLO A/B/C y después lo modificamos para que no tenga errores o hacer un manejo de error
-    while intencion_voto not in ["Partido A", "Partido B", "Partido C", "Indeciso"]:
+    while intencion_voto not in ["Partido A", "Partido B", "Partido C", "Indeciso"] :
         intencion_voto = input("Ingrese qué partido piensa votar (Partido A/Partido B/Partido C): ").title()
     
     disposicion_cambiar = input("Ingrese si hay posibilidad de cambie su intención de voto (Sí/No): ").capitalize()
@@ -227,7 +226,7 @@ def agregar_registro(participantes, partido_A, partido_B, partido_C):
         disposicion_cambiar = input("Ingrese si hay posibilidad de cambie su intención de voto (Sí/No): ").capitalize()
     
     participacion_previa_votacion = input("Ingrese si votó en las elecciones anteriores (Sí/No): ").capitalize()
-    while participacion_previa_votacion not in ["Sí", "No"]:
+    while participacion_previa_votacion not in ["Sí", "No"] :
         participacion_previa_votacion = input("Ingrese si votó en las elecciones anteriores (Sí/No): ").capitalize()
         
 
@@ -293,7 +292,104 @@ def actualizar_datos(archivo, participantes):
         print(f"Error al actualizar el archivo: {e}")
 
 
+def actualizar_datos(archivo, participantes) :
+    '''
+    Actualiza el archivo CSV con los datos actuales de los participantes.
+
+    Recorre todas las instancias de votantes contenidas en el diccionario `participantes` y 
+    construye un nuevo DataFrame con los valores actuales. Luego, guarda ese DataFrame 
+    sobrescribiendo el archivo CSV original.
+
+    También verifica que no existan IDs de votantes duplicados, y en caso de encontrarlos, 
+    lanza un error.
+
+   Parameters
+   ----------
+   archivo : str
+       Nombre del archivo CSV donde se guardarán los datos actualizados.
+   
+   participantes : dict
+       Diccionario de votantes, cuya clave es el ID_Votante y el value es un 
+       objeto de la clase 'Votante'.
+
+   Returns
+   -------
+   None.
+   '''
+    try :
+        filas = []
+        ids_vistos = set() # set() -> se fija si el id ya apareció antes y si no hay coincidencia lo guarda
+        
+        for votante in participantes.values():
+            if votante.id_votante in ids_vistos :
+                raise ValueError(f"ID duplicado encontrado: {votante.id_votante}")
+            
+            ids_vistos.add(votante.id_votante)
+            
+            fila = {
+                'ID_Votante': votante.id_votante,
+                'Genero': votante.genero,
+                'Edad': votante.edad,
+                
+                'Circunscripcion': votante.circunscripcion,
+                'Nivel_Socioeconomico': votante.nivel_socioeconomico,
+                'Nivel_Educativo': votante.nivel_educativo,
+                
+                'Afiliacion_Politica': votante.afiliacion_politica,
+                'Interes_Politica': votante.interes_politica,
+                
+                'Preocupacion_Economia': votante.preocupacion_economica,
+                'Preocupacion_Seguridad': votante.preocupacion_seguridad,
+                
+                'Opinion_Gobierno_Actual': votante.opinion_gobierno_actual,
+                'Percepcion_Corrupcion': votante.percepcion_corrupcion,
+                
+                'Intencion_Voto': votante.intencion_voto,
+                'Disposicion_Cambiar_Voto': votante.dispocision_cambiar_voto,
+                'Participacion_Voto_Anterior': votante.participacion_voto_anterior
+            }
+            
+            filas.append(fila)
+        
+        df_actualizado = pd.DataFrame(filas)
+        df_actualizado.to_csv(archivo, index = False) # el index = False, hace que solo muestre la información del DataFrame, sin el índice que esta función crea.
+        print("Archivo CSV actualizado correctamente.")
+   
+    except ValueError as error:
+        print(f"Error de validación de datos: {error}")
+    
+    except Exception as e:
+        print(f"Error al actualizar el archivo: {e}")
+
+
 def modificar_registro(df, participantes, archivo) :
+    '''
+    Modifica un registro existente de un votante, tanto en el df como en el 
+    diccionario de participantes.
+
+    Permite al usuario seleccionar un votante por su ID y modificar uno o más 
+    de sus campos (excepto el ID). Se modifica directamente el DataFrame y el 
+    diccionario de participantes, y se actualiza el archivo .csv con los 
+    datos actualizados.
+
+    Parameters
+    ----------
+    df : DataFrame
+        DataFrame con los datos actuales de los votantes.
+    
+    participantes : dict
+        Diccionario de votantes, donde la clave es el ID del votante y el valor 
+        es un objeto 'Votante'.
+        
+    archivo : str
+        Nombre del archivo CSV donde se guardarán los datos actualizados.
+
+    Returns
+    -------
+    participantes : dict
+        Diccionario actualizado con la instancia 'Votante' modificada.
+
+    '''
     try:
         id_modificar = int(input("Ingrese el ID del votante que desea modificar: "))
     
@@ -319,7 +415,7 @@ def modificar_registro(df, participantes, archivo) :
     while True :
         campo = input("Ingrese el campo a modificar (o 'fin' para terminar): ")
         
-        if campo.lower() == 'fin': #### COMENTARIO: VERIFICAR PORQUE DA ERROR SI UNO NO LO PONE TODO EN MINÚSCULA
+        if campo.lower() == 'fin':
             break
         
         if campo not in columnas:
@@ -344,6 +440,7 @@ def modificar_registro(df, participantes, archivo) :
     )
     
     return participantes
+
 
 
 def mostrar_resultados_elecciones(partido_A, partido_B, partido_C):

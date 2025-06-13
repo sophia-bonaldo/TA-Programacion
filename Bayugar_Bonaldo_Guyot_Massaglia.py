@@ -86,6 +86,32 @@ class Partido :
 ## FUNCIONES
 
 def cargar_datos(archivo,partido_A,partido_B,partido_C):
+    '''
+    Clasifica a los votantes en tres partidos políticos.Lee un archivo CSV y los clasifica en tres 
+    partidos políticos sacando los datos de la columna 'Intencion_Voto'. Se agregan a los votantes a 
+    sus respectivos partidos mediante los métodos de la clase 'Partido'. Devuelve un diccionario con los objetos y un dataframe
+    con los datos de los votantes.
+
+
+    Parameters
+    ----------
+    archivo : str
+        El archivo que contiene las columnas de donde se sacan los datos.
+    partido_A : objeto
+        Objeto de la clase 'Partido', es el 'Partido A'.
+    partido_B : objeto
+        Objeto de la clase 'Partido', es el 'Partido B'.
+    partido_C : objeto
+        Objeto de la clase 'Partido', es el 'Partico C'.
+
+    Returns
+    -------
+    dicc_personas : dict
+        Devuelve un diccionario con los objetos, la clave es un identificador unico (numero del 1 al ultimo)
+        y el valor es el objeto 'Votante'.
+    df : dataframe
+        Devuelve el df con los datos de los votantes.
+    '''
     df = pd.read_csv(archivo)
     
     dicc_personas = {}
@@ -136,7 +162,7 @@ def agregar_registro(participantes, partido_A, partido_B, partido_C):
         nivel_socioeconomico = input("Ingrese el nivel socioeconomico: ")
         
     
-    nivel_educativo = input("Ingrese el nivel educativo más alto alcanzado: ")
+    nivel_educativo = input("Ingrese el nivel educativo más alto alcanzado (Secundario/Universitario/Posgrado): ")
     while nivel_educativo not in ["Secundario", "Universitario", "Posgrado"]: ##### PREGUNTAR SI PODRÍAMOS DEJAR QUE PONGA 'Primario' u 'Otro'
         nivel_educativo = input("Ingrese el nivel educativo más alto alcanzado: ")
     
@@ -180,7 +206,6 @@ def agregar_registro(participantes, partido_A, partido_B, partido_C):
 
     valores = [ultimo_id, genero, edad, circuncripcion, nivel_socioeconomico, nivel_educativo, afiliacion_politica, interes_politica, preocupacion_economia, preocupacion_seguridad, opinon_gobierno, percepcion_corrupcion, intencion_voto, disposicion_cambiar, participacion_previa_votacion]
     persona = Votante(* valores)
-    print(persona) ######## COMENTARIO: MODIFICAR
     
     participantes[ultimo_id] = persona
     
@@ -295,6 +320,28 @@ def modificar_registro(df, participantes, archivo) :
 
 
 def mostrar_resultados_elecciones(partido_A, partido_B, partido_C):
+    '''
+    Muestra los resultados de las elecciones y printea el partido ganador. Esta funcion utiliza el metodo 'total_votantes' del 
+    objeto 'Partido'. Devuelve los valores de la cantidad de votos de cada partido.
+
+    Parameters
+    ----------
+    partido_A : objeto
+        Objeto de la  clase 'Partido', es el 'Partido A'.
+    partido_B : objeto
+        Objeto de la  clase 'Partido', es el 'Partido B'.
+    partido_C : objeto
+        Objeto de la  clase 'Partido', es el 'Partido C'.
+
+    Returns
+    -------
+    votos_A : int
+        Devuelve un numero entero de los votos del Partido A.
+    votos_B : int
+        Devuelve un numero entero de los votos del Partido B.
+    votos_C : int
+        Devuelve un numero entero de los votos del Partido C.
+    '''
     votos_A = partido_A.total_votantes()
     votos_B = partido_B.total_votantes()
     votos_C = partido_C.total_votantes()
@@ -312,6 +359,46 @@ def mostrar_resultados_elecciones(partido_A, partido_B, partido_C):
 
 
 def clasificar_nivel_socioeconomico(partido_A, partido_B, partido_C, diccionario) : #CAMBIAR NOMBRE FUNCION 
+    '''
+    Clasifica a los votantes de cada partido según su nivel socioeconómico (bajo, medio, alto) y devuelve la cantidad de votantes en cada nivel.
+    Utiliza el método 'clasificar_votantes()' de los objetos 'Partido' para la clasificacion de los votantes en cada nivel socioeconomico
+    Tambien, calcula la cantidad de votantes en cada nivel para los tres partidos y devuelve estos valores.
+    
+           
+    Parameters
+    ----------
+    partido_A : objeto
+        Objeto de la  clase 'Partido', es el 'Partido A'.
+    partido_B : objeto
+        Objeto de la  clase 'Partido', es el 'Partido B'.
+    partido_C : objeto
+        Objeto de la  clase 'Partido', es el 'Partido C'.
+    diccionario : dict
+        Diccionario con los objetos, la clave es un identificador unico (numero del 1 al ultimo elemento)
+        y el valor es el objeto 'Votante'.
+    
+    Returns
+    -------
+    cantidad_A_bajo : int
+        Votantes de 'Partido A' con nivel socioeconómico bajo.
+    cantidad_A_medio : int
+        Votantes de 'Partido A' con nivel socioeconómico medio.
+    cantidad_A_alto : int
+        Votantes de 'Partido A' con nivel socioeconómico alto.
+    cantidad_B_bajo : int
+        Votantes de 'Partido B' con nivel socioeconómico bajo.
+    cantidad_B_medio : int
+        Votantes de 'Partido B' con nivel socioeconómico medio.
+    cantidad_B_alto : int
+        Votantes de 'Partido B' con nivel socioeconómico alto.
+    cantidad_C_bajo : int
+        Votantes de 'Partido C' con nivel socioeconómico bajo.
+    cantidad_C_medio : int
+        Votantes de 'Partido C' con nivel socioeconómico medio.
+    cantidad_C_alto :int
+        Votantes de 'Partido C' con nivel socioeconómico alto.
+    
+    '''
     A_bajo, A_medio, A_alta = partido_A.clasificar_votantes(diccionario)
     B_bajo, B_medio, B_alta = partido_B.clasificar_votantes(diccionario)
     C_bajo, C_medio, C_alta = partido_C.clasificar_votantes(diccionario)
@@ -325,6 +412,30 @@ def clasificar_nivel_socioeconomico(partido_A, partido_B, partido_C, diccionario
 
     
 def predecir_votantes_elecciones(df, umbral = 4.0) :
+    '''
+    Predice la cantidad de votantes que participarán en las elecciones, basándose en la participación anterior 
+    y el interés político de los votantes utilizando el DataFrame. Calcula la cantidad de votantes que cumplen con estos
+
+    Luego calcula cuántos votantes cumplen con estos criterios y estima el porcentaje sobre el total de votantes.
+
+    
+    Parameters
+    ----------
+    df : dataframe
+        Datframe que contiene los datos de los votantes
+    umbral : float, optional
+        Umbral mínimo de interés político. El valor por defecto es 4.0. Los votantes con un valor mayor o igual a este umbral
+        serán considerados para el cálculo. 
+
+    Returns
+    -------
+    total_votantes_estimado : int
+        Número total estimado de votantes que participarán en las elecciones
+    porcentaje_redondeado : float
+        Porcentaje de votantes estimados con respecto al total de votantes en el DataFrame, redondeado a dos decimales.
+
+
+    '''
     #Filtramos los votantes que votaron antes y que tienen un alto interés político
     df_filtrado = df[(df['Participacion_Voto_Anterior'] == 'Sí') & (df['Interes_Politica'] >= umbral)]
     

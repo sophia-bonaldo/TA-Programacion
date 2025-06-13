@@ -168,7 +168,7 @@ def agregar_registro(participantes, partido_A, partido_B, partido_C):
         percepcion_corrupcion = input("ingrese la percepcion de la corrupcion en un rango del 1 al 5")
     
     intencion_voto = input("que partido piensa votar")
-    while intencion_voto not in ["Partido A ", "Partido B", "Partido C", "Indeciso"]:
+    while intencion_voto not in ["Partido A", "Partido B", "Partido C", "Indeciso"]:
         intencion_voto = input("que partido piensa votar")
     
     disposicion_cambiar = input("ingrese si hay posibilidad de cambiar su intencion de voto")
